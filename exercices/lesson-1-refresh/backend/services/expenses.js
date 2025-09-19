@@ -3,7 +3,16 @@ const fs = require("fs");
 let expenses = JSON.parse(fs.readFileSync("./data/expenses.json", "utf-8"));
 const initExpenses = fs.readFileSync("./data/expenses.init.json", "utf-8");
 
-const getAllExpenses = () => {
+const getAllExpenses = (sort) => {
+    if (sort === "date-asc") {
+        expenses = expenses.sort((exp1, exp2) => new Date(exp1.date).getTime() - new Date(exp2.date).getTime());
+    } else if (sort === "date-desc") {
+         expenses = expenses.sort((exp1, exp2) => new Date(exp2.date).getTime() - new Date(exp1.date).getTime());
+    } else if (sort === "amount-asc") {
+        expenses = expenses.sort((exp1, exp2) => exp1.amount - exp2.amount);
+    } else if (sort === "amount-desc") {
+        expenses = expenses.sort((exp1, exp2) => exp2.amount - exp1.amount);
+    }
     return expenses;
 }
 

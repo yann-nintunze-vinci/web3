@@ -3,7 +3,8 @@ const { getAllExpenses, addExpense, resetExpenses } = require('../services/expen
 var router = express.Router();
 
 router.get('/expenses', (req, res, next) => {
-    const expenses = getAllExpenses();
+    const sort = req.query.orderBy;
+    const expenses = getAllExpenses(sort);
 
     res.json(expenses);
 });
