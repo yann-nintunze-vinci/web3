@@ -8,14 +8,16 @@ const Home = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [sort, setSort] = useState<string>("");
 
+  const host = import.meta.env.VITE_API_URL || 'http://unknown-api-url.com';
+
   useEffect(() => {
-    fetch("http://localhost:3000/api/expenses/")
+    fetch(`${host}/api/expenses/`)
       .then((response) => response.json())
       .then((data: Expense[]) => setExpenses(data));
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/expenses?orderBy=${sort}`)
+    fetch(`${host}/api/expenses?orderBy=${sort}`)
       .then((response) => response.json())
       .then((data: Expense[]) => setExpenses(data));
   }, [sort]);
@@ -23,7 +25,7 @@ const Home = () => {
   const handleAdd = (newExpense: Expense) => {
     newExpense.id = (expenses.length + 1).toString();
 
-    fetch("http://localhost:3000/api/expenses/", {
+    fetch(`${host}/api/expenses/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +37,7 @@ const Home = () => {
   };
 
   const handleReset = () => {
-    fetch("http://localhost:3000/api/expenses/reset/", {
+    fetch(`${host}/api/expenses/reset/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
