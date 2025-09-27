@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Expense } from "../types/Expense";
-import { useForm, type FieldValues } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 interface ExpenseAddProps {
   handleAdd: (newExpense: Expense) => void;
