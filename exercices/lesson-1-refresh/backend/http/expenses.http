@@ -5,8 +5,7 @@ POST {{baseUrl}}/api/expenses
 Content-Type: application/json
 
 {
-  "id": "4",
-  "date": "2025-09-19",
+  "date": "2025-09-19T10:00:00.000Z",
   "description": "Café",
   "payer": "Alice",
   "amount": 3.5

@@ -16,7 +16,8 @@ const ExpenseItem = ({ item }: ExpenseItemProps) => {
           <span className="font-medium">ID:</span> {item.id}
         </p>
         <p>
-          <span className="font-medium">Date:</span> {item.date}
+          <span className="font-medium">Date:</span>{" "}
+          {item.date.replace("T", " ").slice(0, 16)}
         </p>
         <p>
           <span className="font-medium">Payer:</span> {item.payer}

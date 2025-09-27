@@ -8,23 +8,19 @@ const Home = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [sort, setSort] = useState<string>("");
 
-  const host = import.meta.env.VITE_API_URL || 'http://unknown-api-url.com';
+  const host = import.meta.env.VITE_API_URL || "http://unknown-api-url.com";
 
-  useEffect(() => {
-    fetch(`${host}/api/expenses/`)
-      .then((response) => response.json())
-      .then((data: Expense[]) => setExpenses(data));
-  }, []);
-
-  useEffect(() => {
+  const getAllExpenses = () => {
     fetch(`${host}/api/expenses?orderBy=${sort}`)
       .then((response) => response.json())
       .then((data: Expense[]) => setExpenses(data));
+  };
+
+  useEffect(() => {
+    getAllExpenses();
   }, [sort]);
 
   const handleAdd = (newExpense: Expense) => {
-    newExpense.id = (expenses.length + 1).toString();
-
     fetch(`${host}/api/expenses/`, {
       method: "POST",
       headers: {
@@ -37,22 +33,17 @@ const Home = () => {
   };
 
   const handleReset = () => {
-    fetch(`${host}/api/expenses/reset/`, {
+    fetch(`${host}/api/expenses/reset?orderBy=${sort}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data: Expense[]) => setExpenses(data));
+    }).then(() => getAllExpenses());
   };
 
   return (
     <>
-      <ExpenseSorter setSort={setSort} />
+      <ExpenseSorter sort={sort} setSort={setSort} />
 
-      {expenses.map((item) => (
-        <ExpenseItem key={item.id} item={item} />
+      {expenses.map((item, key) => (
+        <ExpenseItem key={key} item={item} />
       ))}
 
       <ExpenseAdd handleAdd={handleAdd} />

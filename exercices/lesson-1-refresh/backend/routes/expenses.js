@@ -2,23 +2,20 @@ var express = require('express');
 const { getAllExpenses, addExpense, resetExpenses } = require('../services/expenses');
 var router = express.Router();
 
-router.get('/expenses', (req, res, next) => {
-    const sort = req.query.orderBy;
-    const expenses = getAllExpenses(sort);
+router.get('/expenses', async (req, res) => {
+    const expenses = await getAllExpenses(req.query.orderBy);
 
     res.json(expenses);
 });
 
-router.post('/expenses', (req, res, next) => {
-    const newExpense = req.body;
-
-    addExpense(newExpense);
+router.post('/expenses', async (req, res) => {
+    const newExpense = await addExpense(req.body);
     res.status(201).json(newExpense);
 });
 
-router.post('/expenses/reset', (req, res, next) => {
-    const resetJson = resetExpenses();
-    res.status(200).json(resetJson);
+router.post('/expenses/reset', async (_, res) => {
+    await resetExpenses();
+    res.status(200).json({message: "reset successfully"});
 });
 
 module.exports = router;
