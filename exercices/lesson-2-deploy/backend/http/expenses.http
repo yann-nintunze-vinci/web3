@@ -1,7 +1,7 @@
 @baseUrl=http://localhost:3000
 
 ###
-POST {{baseUrl}}/api/expenses
+POST {{baseUrl}}/expenses
 Content-Type: application/json
 
 {
@@ -12,10 +12,10 @@ Content-Type: application/json
 }
 
 ###
-GET {{baseUrl}}/api/expenses
+GET {{baseUrl}}/expenses
 Accept: application/json
 
 
 ###
-POST {{baseUrl}}/api/expenses/reset
+POST {{baseUrl}}/expenses/reset
 Accept: application/json
