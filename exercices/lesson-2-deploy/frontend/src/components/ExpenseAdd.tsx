@@ -1,13 +1,13 @@
-import { useState } from "react";
 import type { Expense } from "../types/Expense";
 import { useForm } from "react-hook-form";
 
 interface ExpenseAddProps {
   handleAdd: (newExpense: Expense) => void;
+  handleReset: () => void;
+  payers: string[];
 }
 
-const ExpenseAdd = ({ handleAdd }: ExpenseAddProps) => {
-  const [showForm, setShowForm] = useState<boolean>(false);
+const ExpenseAdd = ({ handleAdd, handleReset, payers }: ExpenseAddProps) => {
   const {
     register,
     handleSubmit,
@@ -15,55 +15,51 @@ const ExpenseAdd = ({ handleAdd }: ExpenseAddProps) => {
   } = useForm<Expense>();
 
   const onSuccess = (data: Expense) => {
-    const expense: Expense = {
+    const newExpense: Expense = {
       date: new Date(Date.now()).toISOString(),
       description: data.description,
-      payer: Math.random() > 0.5 ? "Alice" : "Bob", //changer
+      payer: data.payer,
       amount:
         typeof data.amount === "string" ? parseFloat(data.amount) : data.amount,
     };
-    handleAdd(expense);
+    handleAdd(newExpense);
   };
 
   return (
     <>
-      <button onClick={() => setShowForm((prev) => !prev)}>Add</button>
-      {showForm && (
-        <form onSubmit={handleSubmit(onSuccess)}>
-          <label>
-            Description :
-            <input
-              {...register("description", {
-                required: "Description required",
-                maxLength: { value: 100, message: "Max 100 chars" },
-              })}
-              placeholder="description"
-            />
-            {errors.description && <div>{errors.description.message}</div>}
-          </label>
+      <form onSubmit={handleSubmit(onSuccess)} style={{ display: "flex", gap: "1em", marginBottom: '1em' }}>
+        <input
+          {...register("description", {
+            required: "Description required",
+            maxLength: { value: 100, message: "Max 100 chars" },
+          })}
+          placeholder="description"
+        />
+        {errors.description && <>{errors.description.message}</>}
 
-          <div>
-            <label>
-              Amount :
-              <input
-                type="number"
-                step="0.01"
-                {...register("amount", {
-                  required: "Amount required",
-                  min: {
-                    value: 0.01,
-                    message: "Must be positive",
-                  },
-                })}
-                placeholder="amount"
-              />
-              {errors.amount && <div>{errors.amount.message}</div>}
-            </label>
-          </div>
+        <select {...register("payer")}>
+          {payers.map((payer, key) => (
+            <option key={key}>{payer}</option>
+          ))}
+        </select>
+        <input
+          type="number"
+          step="0.01"
+          {...register("amount", {
+            required: "Amount required",
+            min: {
+              value: 0.01,
+              message: "Must be positive",
+            },
+          })}
+          placeholder="amount"
+        />
+        {errors.amount && <>{errors.amount.message}</>}
 
-          <button type="submit">Submit</button>
-        </form>
-      )}
+        <button type="submit">Add</button>
+      </form>
+
+      <button onClick={handleReset}>Reset Data</button>
     </>
   );
 };

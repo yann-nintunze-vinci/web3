@@ -7,6 +7,7 @@ import ExpenseSorter from "../components/ExpenseSorter";
 const Home = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [sort, setSort] = useState<string>("");
+  const [payers, setPayers] = useState<string[]>([]);
 
   const host = import.meta.env.VITE_API_URL || "http://unknown-api-url.com";
 
@@ -19,6 +20,10 @@ const Home = () => {
   useEffect(() => {
     getAllExpenses();
   }, [sort]);
+
+  useEffect(() => {
+    getPayers();
+  }, []);
 
   const handleAdd = (newExpense: Expense) => {
     fetch(`${host}/expenses/`, {
@@ -38,17 +43,28 @@ const Home = () => {
     }).then(() => getAllExpenses());
   };
 
+  const getPayers = () => {
+    fetch(`${host}/expenses/payers`)
+      .then((response) => response.json())
+      .then((data: string[]) => setPayers(data));
+  };
+
   return (
     <>
+      <h1>Expense Sharing App</h1>
+
+      <ExpenseAdd
+        handleAdd={handleAdd}
+        handleReset={handleReset}
+        payers={payers}
+      />
+
+      <h3>Expenses ({expenses.length})</h3>
       <ExpenseSorter sort={sort} setSort={setSort} />
 
       {expenses.map((item, key) => (
         <ExpenseItem key={key} item={item} />
       ))}
-
-      <ExpenseAdd handleAdd={handleAdd} />
-
-      <button onClick={handleReset}>Reset Data</button>
     </>
   );
 };

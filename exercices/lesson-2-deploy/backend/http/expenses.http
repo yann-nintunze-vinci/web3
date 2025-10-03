@@ -18,4 +18,6 @@ Accept: application/json
 
 ###
 POST {{baseUrl}}/expenses/reset
-Accept: application/json
+
+###
+GET {{baseUrl}}/expenses/payers
