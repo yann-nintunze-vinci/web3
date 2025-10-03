@@ -1,9 +1,17 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Welcome from "./components/Welcome";
 import type { Expense } from "./types/Expense";
 import ExpenseAdd from "./components/ExpenseAdd";
 import List from "./components/List";
+
+export const PageContext = createContext<{
+  currentPage: string;
+  setCurrentPage: (p: string) => void;
+}>({
+  currentPage: "Welcome",
+  setCurrentPage: () => {},
+});
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState<string>("Welcome");
@@ -51,19 +59,19 @@ const App = () => {
       .then((data: string[]) => setPayers(data));
   };
 
-  if (currentPage == "Welcome")
-    return <Welcome setCurrentPage={setCurrentPage} />;
-  if (currentPage == "Add")
-    return (
-      <ExpenseAdd
-        handleAdd={handleAdd}
-        handleReset={handleReset}
-        payers={payers}
-      />
-    );
+  const pages: { [key: string]: React.FunctionComponent<any> } = {
+    "Welcome": Welcome,
+    "List": (_) => <List expenses={expenses} sort={sort} setSort={setSort} />,
+    "Add": (_) => <ExpenseAdd handleAdd={handleAdd} handleReset={handleReset} payers={payers} />,
+  };
 
-  if (currentPage == "List")
-    return <List expenses={expenses} sort={sort} setSort={setSort} />;
+  const CurrentPageComponent = pages[currentPage];
+
+  return (
+    <PageContext.Provider value={{ currentPage, setCurrentPage }}>
+      <CurrentPageComponent />
+    </PageContext.Provider>
+  );
 };
 
 export default App;

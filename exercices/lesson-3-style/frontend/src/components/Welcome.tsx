@@ -1,13 +1,13 @@
-interface WelcomeProps {
-  setCurrentPage: (s: string) => void;
-}
+import { useContext } from "react";
+import { PageContext } from "../App";
 
-const Welcome = ({ setCurrentPage }: WelcomeProps) => {
+const Welcome = () => {
+  const { setCurrentPage } = useContext(PageContext);
   return (
     <>
-      <h1>Expense Sharing App</h1>
-      <button onClick={() => setCurrentPage("List")}>View Expense List</button>
-      <button onClick={() => setCurrentPage("Add")}>View Expense Form</button>
+      <h1>Welcome to the Expense Tracker</h1>
+      <button onClick={() => setCurrentPage("List")}>View Expenses</button>
+      <button onClick={() => setCurrentPage("Add")}>Add Expense</button>
     </>
   );
 };
