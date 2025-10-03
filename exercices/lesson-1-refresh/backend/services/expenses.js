@@ -26,33 +26,28 @@ const defaultExpenses = {
 };
 
 const getAllExpenses = async (sort) => {
-    if (sort === "date-asc") {
-        return await prisma.expense.findMany({
+  switch (sort) {
+    case "date-asc":
+      return await prisma.expense.findMany({
       orderBy: { date: 'asc'}
     });
-    }
-    
-    if (sort === "date-desc") {
-         return await prisma.expense.findMany({
+    case "date-desc":
+      return await prisma.expense.findMany({
       orderBy: { date: 'desc'}
     });
-    }
-    
-    if (sort === "amount-asc") {
-        return await prisma.expense.findMany({
+    case "amount-asc":
+      return await prisma.expense.findMany({
       orderBy: { amount: 'asc'}
     });
-    }
-    
-    if (sort === "amount-desc") {
-        return await prisma.expense.findMany({
+    case "amount-desc":
+      return await prisma.expense.findMany({
       orderBy: { amount: 'desc'}
     });
-    }
-    
-    return await prisma.expense.findMany({
+    default:
+      return await prisma.expense.findMany({
       orderBy: { id: 'asc'}
-    });
+      });
+  }
 }
 
 const addExpense = async (newExpense) => {
@@ -62,8 +57,8 @@ const addExpense = async (newExpense) => {
 }
 
 const resetExpenses = async () => {
-    await prisma.$executeRawUnsafe(`TRUNCATE TABLE "Expense" RESTART IDENTITY CASCADE`);
+    await prisma.$executeRawUnsafe('TRUNCATE TABLE "Expense" RESTART IDENTITY CASCADE');
     await prisma.expense.createMany(defaultExpenses);
 }
 
-module.exports = { getAllExpenses, addExpense, resetExpenses}
+module.exports = { getAllExpenses, addExpense, resetExpenses, defaultExpenses}

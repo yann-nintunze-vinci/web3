@@ -11,7 +11,7 @@ const Home = () => {
   const host = import.meta.env.VITE_API_URL || "http://unknown-api-url.com";
 
   const getAllExpenses = () => {
-    fetch(`${host}/api/expenses?orderBy=${sort}`)
+    fetch(`${host}/expenses?orderBy=${sort}`)
       .then((response) => response.json())
       .then((data: Expense[]) => setExpenses(data));
   };
@@ -21,7 +21,7 @@ const Home = () => {
   }, [sort]);
 
   const handleAdd = (newExpense: Expense) => {
-    fetch(`${host}/api/expenses/`, {
+    fetch(`${host}/expenses/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ const Home = () => {
   };
 
   const handleReset = () => {
-    fetch(`${host}/api/expenses/reset?orderBy=${sort}`, {
+    fetch(`${host}/expenses/reset?orderBy=${sort}`, {
       method: "POST",
     }).then(() => getAllExpenses());
   };
