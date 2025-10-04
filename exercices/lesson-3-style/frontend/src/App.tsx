@@ -5,13 +5,15 @@ import type { Expense } from "./types/Expense";
 import ExpenseAdd from "./components/ExpenseAdd";
 import List from "./components/List";
 
+const defaultPageContext = {
+  currentPage: "Welcome",
+  setCurrentPage: () => {},
+};
+
 export const PageContext = createContext<{
   currentPage: string;
   setCurrentPage: (p: string) => void;
-}>({
-  currentPage: "Welcome",
-  setCurrentPage: () => {},
-});
+}>(defaultPageContext);
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState<string>("Welcome");
@@ -60,9 +62,15 @@ const App = () => {
   };
 
   const pages: { [key: string]: React.FunctionComponent<any> } = {
-    "Welcome": Welcome,
-    "List": (_) => <List expenses={expenses} sort={sort} setSort={setSort} />,
-    "Add": (_) => <ExpenseAdd handleAdd={handleAdd} handleReset={handleReset} payers={payers} />,
+    Welcome: Welcome,
+    List: (_) => <List expenses={expenses} sort={sort} setSort={setSort} />,
+    Add: (_) => (
+      <ExpenseAdd
+        handleAdd={handleAdd}
+        handleReset={handleReset}
+        payers={payers}
+      />
+    ),
   };
 
   const CurrentPageComponent = pages[currentPage];
