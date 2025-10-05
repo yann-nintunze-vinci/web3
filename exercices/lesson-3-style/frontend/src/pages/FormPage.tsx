@@ -1,18 +1,18 @@
-import type { Expense } from "../types/Expense";
+import type { ExpensesContextType, Expense } from "../type";
 import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { ExpensesContext } from "../contexts/ExpensesContext";
+import { useNavigate } from "react-router-dom";
 
-interface ExpenseAddProps {
-  handleAdd: (newExpense: Expense) => void;
-  handleReset: () => void;
-  payers: string[];
-}
-
-const ExpenseAdd = ({ handleAdd, handleReset, payers }: ExpenseAddProps) => {
+const FormPage = () => {
+  const { handleAdd, payers } =
+    useContext<ExpensesContextType>(ExpensesContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Expense>();
+  const navigate = useNavigate();
 
   const onSuccess = (data: Expense) => {
     const newExpense: Expense = {
@@ -23,11 +23,17 @@ const ExpenseAdd = ({ handleAdd, handleReset, payers }: ExpenseAddProps) => {
         typeof data.amount === "string" ? parseFloat(data.amount) : data.amount,
     };
     handleAdd(newExpense);
+    navigate("/expenses");
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSuccess)} style={{ display: "flex", gap: "1em", marginBottom: '1em' }}>
+      <h2>Add expense</h2>
+
+      <form
+        onSubmit={handleSubmit(onSuccess)}
+        style={{ display: "flex", gap: "1em", marginBottom: "1em" }}
+      >
         <input
           {...register("description", {
             required: "Description required",
@@ -58,10 +64,8 @@ const ExpenseAdd = ({ handleAdd, handleReset, payers }: ExpenseAddProps) => {
 
         <button type="submit">Add</button>
       </form>
-
-      <button onClick={handleReset}>Reset Data</button>
     </>
   );
 };
 
-export default ExpenseAdd;
+export default FormPage;
