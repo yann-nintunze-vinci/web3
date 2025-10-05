@@ -73,10 +73,17 @@ const App = () => {
     ),
   };
 
+  const handlePageChange = (page: string) => {
+    window.history.pushState(null, page, `/${page.toLowerCase()}`);
+    setCurrentPage(page);
+  };
+
   const CurrentPageComponent = pages[currentPage];
 
   return (
-    <PageContext.Provider value={{ currentPage, setCurrentPage }}>
+    <PageContext.Provider
+      value={{ currentPage, setCurrentPage: handlePageChange }}
+    >
       <CurrentPageComponent />
     </PageContext.Provider>
   );

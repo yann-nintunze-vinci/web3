@@ -3,6 +3,7 @@ import { PageContext } from "../App";
 
 const Welcome = () => {
   const { setCurrentPage } = useContext(PageContext);
+
   return (
     <>
       <h1>Welcome to the Expense Tracker</h1>
