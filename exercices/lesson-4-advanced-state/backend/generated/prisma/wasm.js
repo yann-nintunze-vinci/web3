@@ -35,12 +35,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.17.0
- * Query Engine version: c0aafc03b8ef6cdced8654b9a817999e02457d6a
+ * Prisma Client JS version: 6.17.1
+ * Query Engine version: 272a37d34178c2894197e17273bf937f25acdeac
  */
 Prisma.prismaVersion = {
-  client: "6.17.0",
-  engine: "c0aafc03b8ef6cdced8654b9a817999e02457d6a"
+  client: "6.17.1",
+  engine: "272a37d34178c2894197e17273bf937f25acdeac"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -92,12 +92,25 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  bankAccount: 'bankAccount'
+};
+
+exports.Prisma.TransferScalarFieldEnum = {
+  id: 'id',
+  sourceId: 'sourceId',
+  targetId: 'targetId'
+};
+
 exports.Prisma.ExpenseScalarFieldEnum = {
   id: 'id',
   date: 'date',
   description: 'description',
-  payer: 'payer',
-  amount: 'amount'
+  amount: 'amount',
+  payerId: 'payerId'
 };
 
 exports.Prisma.SortOrder = {
@@ -110,8 +123,15 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
+  User: 'User',
+  Transfer: 'Transfer',
   Expense: 'Expense'
 };
 /**
@@ -147,13 +167,12 @@ const config = {
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
-  "clientVersion": "6.17.0",
-  "engineVersion": "c0aafc03b8ef6cdced8654b9a817999e02457d6a",
+  "clientVersion": "6.17.1",
+  "engineVersion": "272a37d34178c2894197e17273bf937f25acdeac",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -162,13 +181,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Expense {\n  id          Int      @id @default(autoincrement())\n  date        DateTime @default(now())\n  description String\n  payer       String\n  amount      Float\n}\n\n/**\n * model User {\n * id                   Int        @id @default(autoincrement())\n * name                 String\n * email                String     @unique\n * bankAccount          String?\n * paidExpenses         Expense[]  @relation(\"PayerExpenses\")\n * participatedExpenses Expense[]  @relation(\"ParticipantExpenses\")\n * transfersOut         Transfer[] @relation(\"UserTransfersSource\")\n * transfersIn          Transfer[] @relation(\"UserTransfersTarget\")\n * }\n * model Transfer {\n * id       Int  @id @default(autoincrement())\n * sourceId Int\n * targetId Int\n * source   User @relation(\"UserTransfersSource\", fields: [sourceId], references: [id])\n * target   User @relation(\"UserTransfersTarget\", fields: [targetId], references: [id])\n * }\n * model Expense {\n * id            Int      @id @default(autoincrement())\n * date          DateTime @default(now())\n * description   String\n * amount        Float\n * payerId       Int\n * payer         User     @relation(\"PayerExpenses\", fields: [payerId], references: [id])\n * particpipants User[]   @relation(\"ParticipantExpenses\")\n * }\n */\n",
-  "inlineSchemaHash": "e3fd5d9f9ec2acb8ebb018d7d6536f34cf47ac4d1efbf1864a546460dcaf0fa1",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id                   Int        @id @default(autoincrement())\n  name                 String\n  email                String     @unique\n  bankAccount          String?\n  paidExpenses         Expense[]  @relation(\"PayerExpenses\")\n  participatedExpenses Expense[]  @relation(\"ParticipantExpenses\")\n  transfersOut         Transfer[] @relation(\"UserTransfersSource\")\n  transfersIn          Transfer[] @relation(\"UserTransfersTarget\")\n}\n\nmodel Transfer {\n  id       Int  @id @default(autoincrement())\n  sourceId Int\n  targetId Int\n  source   User @relation(\"UserTransfersSource\", fields: [sourceId], references: [id])\n  target   User @relation(\"UserTransfersTarget\", fields: [targetId], references: [id])\n}\n\nmodel Expense {\n  id            Int      @id @default(autoincrement())\n  date          DateTime @default(now())\n  description   String\n  amount        Float\n  payerId       Int\n  payer         User     @relation(\"PayerExpenses\", fields: [payerId], references: [id])\n  particpipants User[]   @relation(\"ParticipantExpenses\")\n}\n",
+  "inlineSchemaHash": "053b61ca922eff9942f00b8153758f40d7f7b5fa94e37fe3d5709a20e4426620",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Expense\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"date\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"payer\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Float\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"bankAccount\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"paidExpenses\",\"kind\":\"object\",\"type\":\"Expense\",\"relationName\":\"PayerExpenses\"},{\"name\":\"participatedExpenses\",\"kind\":\"object\",\"type\":\"Expense\",\"relationName\":\"ParticipantExpenses\"},{\"name\":\"transfersOut\",\"kind\":\"object\",\"type\":\"Transfer\",\"relationName\":\"UserTransfersSource\"},{\"name\":\"transfersIn\",\"kind\":\"object\",\"type\":\"Transfer\",\"relationName\":\"UserTransfersTarget\"}],\"dbName\":null},\"Transfer\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"sourceId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"targetId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"source\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserTransfersSource\"},{\"name\":\"target\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserTransfersTarget\"}],\"dbName\":null},\"Expense\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"date\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"payerId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"payer\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"PayerExpenses\"},{\"name\":\"particpipants\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ParticipantExpenses\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
