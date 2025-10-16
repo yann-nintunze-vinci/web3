@@ -20,19 +20,21 @@ model User {
 }
 
 model Transfer {
-  id       Int  @id @default(autoincrement())
+  id       Int      @id @default(autoincrement())
+  amount   Float
+  date     DateTime @default(now())
   sourceId Int
   targetId Int
-  source   User @relation("UserTransfersSource", fields: [sourceId], references: [id])
-  target   User @relation("UserTransfersTarget", fields: [targetId], references: [id])
+  source   User     @relation("UserTransfersSource", fields: [sourceId], references: [id])
+  target   User     @relation("UserTransfersTarget", fields: [targetId], references: [id])
 }
 
 model Expense {
-  id            Int      @id @default(autoincrement())
-  date          DateTime @default(now())
-  description   String
-  amount        Float
-  payerId       Int
-  payer         User     @relation("PayerExpenses", fields: [payerId], references: [id])
-  particpipants User[]   @relation("ParticipantExpenses")
+  id           Int      @id @default(autoincrement())
+  date         DateTime @default(now())
+  description  String
+  amount       Float
+  payerId      Int
+  payer        User     @relation("PayerExpenses", fields: [payerId], references: [id])
+  participants User[]   @relation("ParticipantExpenses")
 }

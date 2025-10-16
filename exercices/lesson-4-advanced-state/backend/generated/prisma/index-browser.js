@@ -129,6 +129,8 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.TransferScalarFieldEnum = {
   id: 'id',
+  amount: 'amount',
+  date: 'date',
   sourceId: 'sourceId',
   targetId: 'targetId'
 };

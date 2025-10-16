@@ -1,18 +1,43 @@
-import type { Request, RequestHandler, Response } from "express";
+import { Response, Request } from "express";
+import { StatusCodes } from "http-status-codes";
+import * as userRepository from "./userRepository";
 
-import { userService } from "@/api/user/userService";
+const getUsers = async (_: Request, res: Response) => {
+  const expenses = await userRepository.getUsers();
+  res.status(StatusCodes.OK).json(expenses);
+};
 
-class UserController {
-  public getUsers: RequestHandler = async (_req: Request, res: Response) => {
-    const serviceResponse = await userService.findAll();
-    res.status(serviceResponse.statusCode).send(serviceResponse);
-  };
+const getUserDetail = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  const user = await userRepository.getUser(id);
+  if (!user) {
+    return res.status(StatusCodes.NOT_FOUND).json({ error: "User not found" });
+  }
+  res.status(StatusCodes.OK).json(user);
+};
 
-  public getUser: RequestHandler = async (req: Request, res: Response) => {
-    const id = Number.parseInt(req.params.id as string, 10);
-    const serviceResponse = await userService.findById(id);
-    res.status(serviceResponse.statusCode).send(serviceResponse);
-  };
-}
+const createUser = async (req: Request, res: Response) => {
+  const {
+    name,
+    email,
+    bankAccount,
+    paidExpenses,
+    participatedExpenses,
+    transfersIn,
+    transfersOut,
+  } = req.body;
 
-export const userController = new UserController();
+  const newUser = await userRepository.createUser({
+    name,
+    email,
+    bankAccount,
+    paidExpenses,
+    participatedExpenses,
+    transfersIn,
+    transfersOut,
+  });
+
+  res.status(StatusCodes.CREATED).json(newUser);
+};
+
+export { getUserDetail, createUser, getUsers };

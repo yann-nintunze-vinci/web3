@@ -1,30 +1,61 @@
-import type { User } from "@/api/user/userModel";
+import { PrismaClient } from "../../../generated/prisma";
+import { User } from "./userModel";
 
-export const users: User[] = [
-	{
-		id: 1,
-		name: "Alice",
-		email: "alice@example.com",
-		age: 42,
-		createdAt: new Date(),
-		updatedAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days later
-	},
-	{
-		id: 2,
-		name: "Robert",
-		email: "Robert@example.com",
-		age: 21,
-		createdAt: new Date(),
-		updatedAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days later
-	},
-];
+const prisma = new PrismaClient();
 
-export class UserRepository {
-	async findAllAsync(): Promise<User[]> {
-		return users;
-	}
+const getUsers = async () => {
+  return prisma.user.findMany({
+    include: {
+      paidExpenses: true,
+      participatedExpenses: true,
+      transfersIn: true,
+      transfersOut: true,
+    },
+  });
+};
 
-	async findByIdAsync(id: number): Promise<User | null> {
-		return users.find((user) => user.id === id) || null;
-	}
-}
+const getUser = async (id: number) => {
+  return prisma.user.findUnique({
+    where: { id },
+    include: {
+      paidExpenses: true,
+      participatedExpenses: true,
+      transfersIn: true,
+      transfersOut: true,
+    },
+  });
+};
+
+const createUser = async ({
+  id,
+  name,
+  email,
+  bankAccount,
+  paidExpenses = [],
+  participatedExpenses = [],
+  transfersIn = [],
+  transfersOut = [],
+}: User) => {
+  return prisma.user.create({
+    data: {
+      id,
+      name,
+      email,
+      bankAccount,
+      paidExpenses: { connect: paidExpenses.map((id) => ({ id })) },
+      participatedExpenses: {
+        connect: participatedExpenses.map((id) => ({ id })),
+      },
+      transfersIn: { connect: transfersIn.map((id) => ({ id })) },
+      transfersOut: { connect: transfersOut.map((id) => ({ id })) },
+    },
+    include: {
+      paidExpenses: true,
+      participatedExpenses: true,
+      transfersIn: true,
+      transfersOut: true,
+    },
+  });
+};
+
+export { getUser, createUser, getUsers };

@@ -1100,11 +1100,11 @@ export namespace Prisma {
    */
 
   export type ExpenseCountOutputType = {
-    particpipants: number
+    participants: number
   }
 
   export type ExpenseCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    particpipants?: boolean | ExpenseCountOutputTypeCountParticpipantsArgs
+    participants?: boolean | ExpenseCountOutputTypeCountParticipantsArgs
   }
 
   // Custom InputTypes
@@ -1121,7 +1121,7 @@ export namespace Prisma {
   /**
    * ExpenseCountOutputType without action
    */
-  export type ExpenseCountOutputTypeCountParticpipantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ExpenseCountOutputTypeCountParticipantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
   }
 
@@ -2319,30 +2319,38 @@ export namespace Prisma {
 
   export type TransferAvgAggregateOutputType = {
     id: number | null
+    amount: number | null
     sourceId: number | null
     targetId: number | null
   }
 
   export type TransferSumAggregateOutputType = {
     id: number | null
+    amount: number | null
     sourceId: number | null
     targetId: number | null
   }
 
   export type TransferMinAggregateOutputType = {
     id: number | null
+    amount: number | null
+    date: Date | null
     sourceId: number | null
     targetId: number | null
   }
 
   export type TransferMaxAggregateOutputType = {
     id: number | null
+    amount: number | null
+    date: Date | null
     sourceId: number | null
     targetId: number | null
   }
 
   export type TransferCountAggregateOutputType = {
     id: number
+    amount: number
+    date: number
     sourceId: number
     targetId: number
     _all: number
@@ -2351,30 +2359,38 @@ export namespace Prisma {
 
   export type TransferAvgAggregateInputType = {
     id?: true
+    amount?: true
     sourceId?: true
     targetId?: true
   }
 
   export type TransferSumAggregateInputType = {
     id?: true
+    amount?: true
     sourceId?: true
     targetId?: true
   }
 
   export type TransferMinAggregateInputType = {
     id?: true
+    amount?: true
+    date?: true
     sourceId?: true
     targetId?: true
   }
 
   export type TransferMaxAggregateInputType = {
     id?: true
+    amount?: true
+    date?: true
     sourceId?: true
     targetId?: true
   }
 
   export type TransferCountAggregateInputType = {
     id?: true
+    amount?: true
+    date?: true
     sourceId?: true
     targetId?: true
     _all?: true
@@ -2468,6 +2484,8 @@ export namespace Prisma {
 
   export type TransferGroupByOutputType = {
     id: number
+    amount: number
+    date: Date
     sourceId: number
     targetId: number
     _count: TransferCountAggregateOutputType | null
@@ -2493,6 +2511,8 @@ export namespace Prisma {
 
   export type TransferSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    amount?: boolean
+    date?: boolean
     sourceId?: boolean
     targetId?: boolean
     source?: boolean | UserDefaultArgs<ExtArgs>
@@ -2501,6 +2521,8 @@ export namespace Prisma {
 
   export type TransferSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    amount?: boolean
+    date?: boolean
     sourceId?: boolean
     targetId?: boolean
     source?: boolean | UserDefaultArgs<ExtArgs>
@@ -2509,6 +2531,8 @@ export namespace Prisma {
 
   export type TransferSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    amount?: boolean
+    date?: boolean
     sourceId?: boolean
     targetId?: boolean
     source?: boolean | UserDefaultArgs<ExtArgs>
@@ -2517,11 +2541,13 @@ export namespace Prisma {
 
   export type TransferSelectScalar = {
     id?: boolean
+    amount?: boolean
+    date?: boolean
     sourceId?: boolean
     targetId?: boolean
   }
 
-  export type TransferOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sourceId" | "targetId", ExtArgs["result"]["transfer"]>
+  export type TransferOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "date" | "sourceId" | "targetId", ExtArgs["result"]["transfer"]>
   export type TransferInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     source?: boolean | UserDefaultArgs<ExtArgs>
     target?: boolean | UserDefaultArgs<ExtArgs>
@@ -2543,6 +2569,8 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      amount: number
+      date: Date
       sourceId: number
       targetId: number
     }, ExtArgs["result"]["transfer"]>
@@ -2971,6 +2999,8 @@ export namespace Prisma {
    */
   interface TransferFieldRefs {
     readonly id: FieldRef<"Transfer", 'Int'>
+    readonly amount: FieldRef<"Transfer", 'Float'>
+    readonly date: FieldRef<"Transfer", 'DateTime'>
     readonly sourceId: FieldRef<"Transfer", 'Int'>
     readonly targetId: FieldRef<"Transfer", 'Int'>
   }
@@ -3594,7 +3624,7 @@ export namespace Prisma {
     amount?: boolean
     payerId?: boolean
     payer?: boolean | UserDefaultArgs<ExtArgs>
-    particpipants?: boolean | Expense$particpipantsArgs<ExtArgs>
+    participants?: boolean | Expense$participantsArgs<ExtArgs>
     _count?: boolean | ExpenseCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["expense"]>
 
@@ -3627,7 +3657,7 @@ export namespace Prisma {
   export type ExpenseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "description" | "amount" | "payerId", ExtArgs["result"]["expense"]>
   export type ExpenseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     payer?: boolean | UserDefaultArgs<ExtArgs>
-    particpipants?: boolean | Expense$particpipantsArgs<ExtArgs>
+    participants?: boolean | Expense$participantsArgs<ExtArgs>
     _count?: boolean | ExpenseCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ExpenseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3641,7 +3671,7 @@ export namespace Prisma {
     name: "Expense"
     objects: {
       payer: Prisma.$UserPayload<ExtArgs>
-      particpipants: Prisma.$UserPayload<ExtArgs>[]
+      participants: Prisma.$UserPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4044,7 +4074,7 @@ export namespace Prisma {
   export interface Prisma__ExpenseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     payer<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    particpipants<T extends Expense$particpipantsArgs<ExtArgs> = {}>(args?: Subset<T, Expense$particpipantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    participants<T extends Expense$participantsArgs<ExtArgs> = {}>(args?: Subset<T, Expense$participantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4475,9 +4505,9 @@ export namespace Prisma {
   }
 
   /**
-   * Expense.particpipants
+   * Expense.participants
    */
-  export type Expense$particpipantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Expense$participantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -4543,6 +4573,8 @@ export namespace Prisma {
 
   export const TransferScalarFieldEnum: {
     id: 'id',
+    amount: 'amount',
+    date: 'date',
     sourceId: 'sourceId',
     targetId: 'targetId'
   };
@@ -4619,20 +4651,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4643,6 +4661,20 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
   /**
    * Deep Input Types
@@ -4715,6 +4747,8 @@ export namespace Prisma {
     OR?: TransferWhereInput[]
     NOT?: TransferWhereInput | TransferWhereInput[]
     id?: IntFilter<"Transfer"> | number
+    amount?: FloatFilter<"Transfer"> | number
+    date?: DateTimeFilter<"Transfer"> | Date | string
     sourceId?: IntFilter<"Transfer"> | number
     targetId?: IntFilter<"Transfer"> | number
     source?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -4723,6 +4757,8 @@ export namespace Prisma {
 
   export type TransferOrderByWithRelationInput = {
     id?: SortOrder
+    amount?: SortOrder
+    date?: SortOrder
     sourceId?: SortOrder
     targetId?: SortOrder
     source?: UserOrderByWithRelationInput
@@ -4734,6 +4770,8 @@ export namespace Prisma {
     AND?: TransferWhereInput | TransferWhereInput[]
     OR?: TransferWhereInput[]
     NOT?: TransferWhereInput | TransferWhereInput[]
+    amount?: FloatFilter<"Transfer"> | number
+    date?: DateTimeFilter<"Transfer"> | Date | string
     sourceId?: IntFilter<"Transfer"> | number
     targetId?: IntFilter<"Transfer"> | number
     source?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -4742,6 +4780,8 @@ export namespace Prisma {
 
   export type TransferOrderByWithAggregationInput = {
     id?: SortOrder
+    amount?: SortOrder
+    date?: SortOrder
     sourceId?: SortOrder
     targetId?: SortOrder
     _count?: TransferCountOrderByAggregateInput
@@ -4756,6 +4796,8 @@ export namespace Prisma {
     OR?: TransferScalarWhereWithAggregatesInput[]
     NOT?: TransferScalarWhereWithAggregatesInput | TransferScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Transfer"> | number
+    amount?: FloatWithAggregatesFilter<"Transfer"> | number
+    date?: DateTimeWithAggregatesFilter<"Transfer"> | Date | string
     sourceId?: IntWithAggregatesFilter<"Transfer"> | number
     targetId?: IntWithAggregatesFilter<"Transfer"> | number
   }
@@ -4770,7 +4812,7 @@ export namespace Prisma {
     amount?: FloatFilter<"Expense"> | number
     payerId?: IntFilter<"Expense"> | number
     payer?: XOR<UserScalarRelationFilter, UserWhereInput>
-    particpipants?: UserListRelationFilter
+    participants?: UserListRelationFilter
   }
 
   export type ExpenseOrderByWithRelationInput = {
@@ -4780,7 +4822,7 @@ export namespace Prisma {
     amount?: SortOrder
     payerId?: SortOrder
     payer?: UserOrderByWithRelationInput
-    particpipants?: UserOrderByRelationAggregateInput
+    participants?: UserOrderByRelationAggregateInput
   }
 
   export type ExpenseWhereUniqueInput = Prisma.AtLeast<{
@@ -4793,7 +4835,7 @@ export namespace Prisma {
     amount?: FloatFilter<"Expense"> | number
     payerId?: IntFilter<"Expense"> | number
     payer?: XOR<UserScalarRelationFilter, UserWhereInput>
-    particpipants?: UserListRelationFilter
+    participants?: UserListRelationFilter
   }, "id">
 
   export type ExpenseOrderByWithAggregationInput = {
@@ -4825,7 +4867,7 @@ export namespace Prisma {
     email: string
     bankAccount?: string | null
     paidExpenses?: ExpenseCreateNestedManyWithoutPayerInput
-    participatedExpenses?: ExpenseCreateNestedManyWithoutParticpipantsInput
+    participatedExpenses?: ExpenseCreateNestedManyWithoutParticipantsInput
     transfersOut?: TransferCreateNestedManyWithoutSourceInput
     transfersIn?: TransferCreateNestedManyWithoutTargetInput
   }
@@ -4836,7 +4878,7 @@ export namespace Prisma {
     email: string
     bankAccount?: string | null
     paidExpenses?: ExpenseUncheckedCreateNestedManyWithoutPayerInput
-    participatedExpenses?: ExpenseUncheckedCreateNestedManyWithoutParticpipantsInput
+    participatedExpenses?: ExpenseUncheckedCreateNestedManyWithoutParticipantsInput
     transfersOut?: TransferUncheckedCreateNestedManyWithoutSourceInput
     transfersIn?: TransferUncheckedCreateNestedManyWithoutTargetInput
   }
@@ -4846,7 +4888,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     bankAccount?: NullableStringFieldUpdateOperationsInput | string | null
     paidExpenses?: ExpenseUpdateManyWithoutPayerNestedInput
-    participatedExpenses?: ExpenseUpdateManyWithoutParticpipantsNestedInput
+    participatedExpenses?: ExpenseUpdateManyWithoutParticipantsNestedInput
     transfersOut?: TransferUpdateManyWithoutSourceNestedInput
     transfersIn?: TransferUpdateManyWithoutTargetNestedInput
   }
@@ -4857,7 +4899,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     bankAccount?: NullableStringFieldUpdateOperationsInput | string | null
     paidExpenses?: ExpenseUncheckedUpdateManyWithoutPayerNestedInput
-    participatedExpenses?: ExpenseUncheckedUpdateManyWithoutParticpipantsNestedInput
+    participatedExpenses?: ExpenseUncheckedUpdateManyWithoutParticipantsNestedInput
     transfersOut?: TransferUncheckedUpdateManyWithoutSourceNestedInput
     transfersIn?: TransferUncheckedUpdateManyWithoutTargetNestedInput
   }
@@ -4883,39 +4925,52 @@ export namespace Prisma {
   }
 
   export type TransferCreateInput = {
+    amount: number
+    date?: Date | string
     source: UserCreateNestedOneWithoutTransfersOutInput
     target: UserCreateNestedOneWithoutTransfersInInput
   }
 
   export type TransferUncheckedCreateInput = {
     id?: number
+    amount: number
+    date?: Date | string
     sourceId: number
     targetId: number
   }
 
   export type TransferUpdateInput = {
+    amount?: FloatFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: UserUpdateOneRequiredWithoutTransfersOutNestedInput
     target?: UserUpdateOneRequiredWithoutTransfersInNestedInput
   }
 
   export type TransferUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     sourceId?: IntFieldUpdateOperationsInput | number
     targetId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TransferCreateManyInput = {
     id?: number
+    amount: number
+    date?: Date | string
     sourceId: number
     targetId: number
   }
 
   export type TransferUpdateManyMutationInput = {
-
+    amount?: FloatFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TransferUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     sourceId?: IntFieldUpdateOperationsInput | number
     targetId?: IntFieldUpdateOperationsInput | number
   }
@@ -4925,7 +4980,7 @@ export namespace Prisma {
     description: string
     amount: number
     payer: UserCreateNestedOneWithoutPaidExpensesInput
-    particpipants?: UserCreateNestedManyWithoutParticipatedExpensesInput
+    participants?: UserCreateNestedManyWithoutParticipatedExpensesInput
   }
 
   export type ExpenseUncheckedCreateInput = {
@@ -4934,7 +4989,7 @@ export namespace Prisma {
     description: string
     amount: number
     payerId: number
-    particpipants?: UserUncheckedCreateNestedManyWithoutParticipatedExpensesInput
+    participants?: UserUncheckedCreateNestedManyWithoutParticipatedExpensesInput
   }
 
   export type ExpenseUpdateInput = {
@@ -4942,7 +4997,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     payer?: UserUpdateOneRequiredWithoutPaidExpensesNestedInput
-    particpipants?: UserUpdateManyWithoutParticipatedExpensesNestedInput
+    participants?: UserUpdateManyWithoutParticipatedExpensesNestedInput
   }
 
   export type ExpenseUncheckedUpdateInput = {
@@ -4951,7 +5006,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     payerId?: IntFieldUpdateOperationsInput | number
-    particpipants?: UserUncheckedUpdateManyWithoutParticipatedExpensesNestedInput
+    participants?: UserUncheckedUpdateManyWithoutParticipatedExpensesNestedInput
   }
 
   export type ExpenseCreateManyInput = {
@@ -5123,39 +5178,15 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
-  }
-
-  export type TransferCountOrderByAggregateInput = {
-    id?: SortOrder
-    sourceId?: SortOrder
-    targetId?: SortOrder
-  }
-
-  export type TransferAvgOrderByAggregateInput = {
-    id?: SortOrder
-    sourceId?: SortOrder
-    targetId?: SortOrder
-  }
-
-  export type TransferMaxOrderByAggregateInput = {
-    id?: SortOrder
-    sourceId?: SortOrder
-    targetId?: SortOrder
-  }
-
-  export type TransferMinOrderByAggregateInput = {
-    id?: SortOrder
-    sourceId?: SortOrder
-    targetId?: SortOrder
-  }
-
-  export type TransferSumOrderByAggregateInput = {
-    id?: SortOrder
-    sourceId?: SortOrder
-    targetId?: SortOrder
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -5169,7 +5200,50 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type TransferCountOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    date?: SortOrder
+    sourceId?: SortOrder
+    targetId?: SortOrder
+  }
+
+  export type TransferAvgOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    sourceId?: SortOrder
+    targetId?: SortOrder
+  }
+
+  export type TransferMaxOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    date?: SortOrder
+    sourceId?: SortOrder
+    targetId?: SortOrder
+  }
+
+  export type TransferMinOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    date?: SortOrder
+    sourceId?: SortOrder
+    targetId?: SortOrder
+  }
+
+  export type TransferSumOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    sourceId?: SortOrder
+    targetId?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
     notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -5177,7 +5251,26 @@ export namespace Prisma {
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type UserListRelationFilter = {
@@ -5226,36 +5319,6 @@ export namespace Prisma {
     payerId?: SortOrder
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
-  }
-
   export type ExpenseCreateNestedManyWithoutPayerInput = {
     create?: XOR<ExpenseCreateWithoutPayerInput, ExpenseUncheckedCreateWithoutPayerInput> | ExpenseCreateWithoutPayerInput[] | ExpenseUncheckedCreateWithoutPayerInput[]
     connectOrCreate?: ExpenseCreateOrConnectWithoutPayerInput | ExpenseCreateOrConnectWithoutPayerInput[]
@@ -5263,9 +5326,9 @@ export namespace Prisma {
     connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
   }
 
-  export type ExpenseCreateNestedManyWithoutParticpipantsInput = {
-    create?: XOR<ExpenseCreateWithoutParticpipantsInput, ExpenseUncheckedCreateWithoutParticpipantsInput> | ExpenseCreateWithoutParticpipantsInput[] | ExpenseUncheckedCreateWithoutParticpipantsInput[]
-    connectOrCreate?: ExpenseCreateOrConnectWithoutParticpipantsInput | ExpenseCreateOrConnectWithoutParticpipantsInput[]
+  export type ExpenseCreateNestedManyWithoutParticipantsInput = {
+    create?: XOR<ExpenseCreateWithoutParticipantsInput, ExpenseUncheckedCreateWithoutParticipantsInput> | ExpenseCreateWithoutParticipantsInput[] | ExpenseUncheckedCreateWithoutParticipantsInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutParticipantsInput | ExpenseCreateOrConnectWithoutParticipantsInput[]
     connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
   }
 
@@ -5290,9 +5353,9 @@ export namespace Prisma {
     connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
   }
 
-  export type ExpenseUncheckedCreateNestedManyWithoutParticpipantsInput = {
-    create?: XOR<ExpenseCreateWithoutParticpipantsInput, ExpenseUncheckedCreateWithoutParticpipantsInput> | ExpenseCreateWithoutParticpipantsInput[] | ExpenseUncheckedCreateWithoutParticpipantsInput[]
-    connectOrCreate?: ExpenseCreateOrConnectWithoutParticpipantsInput | ExpenseCreateOrConnectWithoutParticpipantsInput[]
+  export type ExpenseUncheckedCreateNestedManyWithoutParticipantsInput = {
+    create?: XOR<ExpenseCreateWithoutParticipantsInput, ExpenseUncheckedCreateWithoutParticipantsInput> | ExpenseCreateWithoutParticipantsInput[] | ExpenseUncheckedCreateWithoutParticipantsInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutParticipantsInput | ExpenseCreateOrConnectWithoutParticipantsInput[]
     connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
   }
 
@@ -5332,16 +5395,16 @@ export namespace Prisma {
     deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
   }
 
-  export type ExpenseUpdateManyWithoutParticpipantsNestedInput = {
-    create?: XOR<ExpenseCreateWithoutParticpipantsInput, ExpenseUncheckedCreateWithoutParticpipantsInput> | ExpenseCreateWithoutParticpipantsInput[] | ExpenseUncheckedCreateWithoutParticpipantsInput[]
-    connectOrCreate?: ExpenseCreateOrConnectWithoutParticpipantsInput | ExpenseCreateOrConnectWithoutParticpipantsInput[]
-    upsert?: ExpenseUpsertWithWhereUniqueWithoutParticpipantsInput | ExpenseUpsertWithWhereUniqueWithoutParticpipantsInput[]
+  export type ExpenseUpdateManyWithoutParticipantsNestedInput = {
+    create?: XOR<ExpenseCreateWithoutParticipantsInput, ExpenseUncheckedCreateWithoutParticipantsInput> | ExpenseCreateWithoutParticipantsInput[] | ExpenseUncheckedCreateWithoutParticipantsInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutParticipantsInput | ExpenseCreateOrConnectWithoutParticipantsInput[]
+    upsert?: ExpenseUpsertWithWhereUniqueWithoutParticipantsInput | ExpenseUpsertWithWhereUniqueWithoutParticipantsInput[]
     set?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
     disconnect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
     delete?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
     connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
-    update?: ExpenseUpdateWithWhereUniqueWithoutParticpipantsInput | ExpenseUpdateWithWhereUniqueWithoutParticpipantsInput[]
-    updateMany?: ExpenseUpdateManyWithWhereWithoutParticpipantsInput | ExpenseUpdateManyWithWhereWithoutParticpipantsInput[]
+    update?: ExpenseUpdateWithWhereUniqueWithoutParticipantsInput | ExpenseUpdateWithWhereUniqueWithoutParticipantsInput[]
+    updateMany?: ExpenseUpdateManyWithWhereWithoutParticipantsInput | ExpenseUpdateManyWithWhereWithoutParticipantsInput[]
     deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
   }
 
@@ -5395,16 +5458,16 @@ export namespace Prisma {
     deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
   }
 
-  export type ExpenseUncheckedUpdateManyWithoutParticpipantsNestedInput = {
-    create?: XOR<ExpenseCreateWithoutParticpipantsInput, ExpenseUncheckedCreateWithoutParticpipantsInput> | ExpenseCreateWithoutParticpipantsInput[] | ExpenseUncheckedCreateWithoutParticpipantsInput[]
-    connectOrCreate?: ExpenseCreateOrConnectWithoutParticpipantsInput | ExpenseCreateOrConnectWithoutParticpipantsInput[]
-    upsert?: ExpenseUpsertWithWhereUniqueWithoutParticpipantsInput | ExpenseUpsertWithWhereUniqueWithoutParticpipantsInput[]
+  export type ExpenseUncheckedUpdateManyWithoutParticipantsNestedInput = {
+    create?: XOR<ExpenseCreateWithoutParticipantsInput, ExpenseUncheckedCreateWithoutParticipantsInput> | ExpenseCreateWithoutParticipantsInput[] | ExpenseUncheckedCreateWithoutParticipantsInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutParticipantsInput | ExpenseCreateOrConnectWithoutParticipantsInput[]
+    upsert?: ExpenseUpsertWithWhereUniqueWithoutParticipantsInput | ExpenseUpsertWithWhereUniqueWithoutParticipantsInput[]
     set?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
     disconnect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
     delete?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
     connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
-    update?: ExpenseUpdateWithWhereUniqueWithoutParticpipantsInput | ExpenseUpdateWithWhereUniqueWithoutParticpipantsInput[]
-    updateMany?: ExpenseUpdateManyWithWhereWithoutParticpipantsInput | ExpenseUpdateManyWithWhereWithoutParticpipantsInput[]
+    update?: ExpenseUpdateWithWhereUniqueWithoutParticipantsInput | ExpenseUpdateWithWhereUniqueWithoutParticipantsInput[]
+    updateMany?: ExpenseUpdateManyWithWhereWithoutParticipantsInput | ExpenseUpdateManyWithWhereWithoutParticipantsInput[]
     deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
   }
 
@@ -5448,6 +5511,18 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
   export type UserUpdateOneRequiredWithoutTransfersOutNestedInput = {
     create?: XOR<UserCreateWithoutTransfersOutInput, UserUncheckedCreateWithoutTransfersOutInput>
     connectOrCreate?: UserCreateOrConnectWithoutTransfersOutInput
@@ -5480,18 +5555,6 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutParticipatedExpensesInput, UserUncheckedCreateWithoutParticipatedExpensesInput> | UserCreateWithoutParticipatedExpensesInput[] | UserUncheckedCreateWithoutParticipatedExpensesInput[]
     connectOrCreate?: UserCreateOrConnectWithoutParticipatedExpensesInput | UserCreateOrConnectWithoutParticipatedExpensesInput[]
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type UserUpdateOneRequiredWithoutPaidExpensesNestedInput = {
@@ -5650,20 +5713,6 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -5680,11 +5729,25 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type ExpenseCreateWithoutPayerInput = {
     date?: Date | string
     description: string
     amount: number
-    particpipants?: UserCreateNestedManyWithoutParticipatedExpensesInput
+    participants?: UserCreateNestedManyWithoutParticipatedExpensesInput
   }
 
   export type ExpenseUncheckedCreateWithoutPayerInput = {
@@ -5692,7 +5755,7 @@ export namespace Prisma {
     date?: Date | string
     description: string
     amount: number
-    particpipants?: UserUncheckedCreateNestedManyWithoutParticipatedExpensesInput
+    participants?: UserUncheckedCreateNestedManyWithoutParticipatedExpensesInput
   }
 
   export type ExpenseCreateOrConnectWithoutPayerInput = {
@@ -5705,14 +5768,14 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ExpenseCreateWithoutParticpipantsInput = {
+  export type ExpenseCreateWithoutParticipantsInput = {
     date?: Date | string
     description: string
     amount: number
     payer: UserCreateNestedOneWithoutPaidExpensesInput
   }
 
-  export type ExpenseUncheckedCreateWithoutParticpipantsInput = {
+  export type ExpenseUncheckedCreateWithoutParticipantsInput = {
     id?: number
     date?: Date | string
     description: string
@@ -5720,17 +5783,21 @@ export namespace Prisma {
     payerId: number
   }
 
-  export type ExpenseCreateOrConnectWithoutParticpipantsInput = {
+  export type ExpenseCreateOrConnectWithoutParticipantsInput = {
     where: ExpenseWhereUniqueInput
-    create: XOR<ExpenseCreateWithoutParticpipantsInput, ExpenseUncheckedCreateWithoutParticpipantsInput>
+    create: XOR<ExpenseCreateWithoutParticipantsInput, ExpenseUncheckedCreateWithoutParticipantsInput>
   }
 
   export type TransferCreateWithoutSourceInput = {
+    amount: number
+    date?: Date | string
     target: UserCreateNestedOneWithoutTransfersInInput
   }
 
   export type TransferUncheckedCreateWithoutSourceInput = {
     id?: number
+    amount: number
+    date?: Date | string
     targetId: number
   }
 
@@ -5745,11 +5812,15 @@ export namespace Prisma {
   }
 
   export type TransferCreateWithoutTargetInput = {
+    amount: number
+    date?: Date | string
     source: UserCreateNestedOneWithoutTransfersOutInput
   }
 
   export type TransferUncheckedCreateWithoutTargetInput = {
     id?: number
+    amount: number
+    date?: Date | string
     sourceId: number
   }
 
@@ -5790,20 +5861,20 @@ export namespace Prisma {
     payerId?: IntFilter<"Expense"> | number
   }
 
-  export type ExpenseUpsertWithWhereUniqueWithoutParticpipantsInput = {
+  export type ExpenseUpsertWithWhereUniqueWithoutParticipantsInput = {
     where: ExpenseWhereUniqueInput
-    update: XOR<ExpenseUpdateWithoutParticpipantsInput, ExpenseUncheckedUpdateWithoutParticpipantsInput>
-    create: XOR<ExpenseCreateWithoutParticpipantsInput, ExpenseUncheckedCreateWithoutParticpipantsInput>
+    update: XOR<ExpenseUpdateWithoutParticipantsInput, ExpenseUncheckedUpdateWithoutParticipantsInput>
+    create: XOR<ExpenseCreateWithoutParticipantsInput, ExpenseUncheckedCreateWithoutParticipantsInput>
   }
 
-  export type ExpenseUpdateWithWhereUniqueWithoutParticpipantsInput = {
+  export type ExpenseUpdateWithWhereUniqueWithoutParticipantsInput = {
     where: ExpenseWhereUniqueInput
-    data: XOR<ExpenseUpdateWithoutParticpipantsInput, ExpenseUncheckedUpdateWithoutParticpipantsInput>
+    data: XOR<ExpenseUpdateWithoutParticipantsInput, ExpenseUncheckedUpdateWithoutParticipantsInput>
   }
 
-  export type ExpenseUpdateManyWithWhereWithoutParticpipantsInput = {
+  export type ExpenseUpdateManyWithWhereWithoutParticipantsInput = {
     where: ExpenseScalarWhereInput
-    data: XOR<ExpenseUpdateManyMutationInput, ExpenseUncheckedUpdateManyWithoutParticpipantsInput>
+    data: XOR<ExpenseUpdateManyMutationInput, ExpenseUncheckedUpdateManyWithoutParticipantsInput>
   }
 
   export type TransferUpsertWithWhereUniqueWithoutSourceInput = {
@@ -5827,6 +5898,8 @@ export namespace Prisma {
     OR?: TransferScalarWhereInput[]
     NOT?: TransferScalarWhereInput | TransferScalarWhereInput[]
     id?: IntFilter<"Transfer"> | number
+    amount?: FloatFilter<"Transfer"> | number
+    date?: DateTimeFilter<"Transfer"> | Date | string
     sourceId?: IntFilter<"Transfer"> | number
     targetId?: IntFilter<"Transfer"> | number
   }
@@ -5852,7 +5925,7 @@ export namespace Prisma {
     email: string
     bankAccount?: string | null
     paidExpenses?: ExpenseCreateNestedManyWithoutPayerInput
-    participatedExpenses?: ExpenseCreateNestedManyWithoutParticpipantsInput
+    participatedExpenses?: ExpenseCreateNestedManyWithoutParticipantsInput
     transfersIn?: TransferCreateNestedManyWithoutTargetInput
   }
 
@@ -5862,7 +5935,7 @@ export namespace Prisma {
     email: string
     bankAccount?: string | null
     paidExpenses?: ExpenseUncheckedCreateNestedManyWithoutPayerInput
-    participatedExpenses?: ExpenseUncheckedCreateNestedManyWithoutParticpipantsInput
+    participatedExpenses?: ExpenseUncheckedCreateNestedManyWithoutParticipantsInput
     transfersIn?: TransferUncheckedCreateNestedManyWithoutTargetInput
   }
 
@@ -5876,7 +5949,7 @@ export namespace Prisma {
     email: string
     bankAccount?: string | null
     paidExpenses?: ExpenseCreateNestedManyWithoutPayerInput
-    participatedExpenses?: ExpenseCreateNestedManyWithoutParticpipantsInput
+    participatedExpenses?: ExpenseCreateNestedManyWithoutParticipantsInput
     transfersOut?: TransferCreateNestedManyWithoutSourceInput
   }
 
@@ -5886,7 +5959,7 @@ export namespace Prisma {
     email: string
     bankAccount?: string | null
     paidExpenses?: ExpenseUncheckedCreateNestedManyWithoutPayerInput
-    participatedExpenses?: ExpenseUncheckedCreateNestedManyWithoutParticpipantsInput
+    participatedExpenses?: ExpenseUncheckedCreateNestedManyWithoutParticipantsInput
     transfersOut?: TransferUncheckedCreateNestedManyWithoutSourceInput
   }
 
@@ -5911,7 +5984,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     bankAccount?: NullableStringFieldUpdateOperationsInput | string | null
     paidExpenses?: ExpenseUpdateManyWithoutPayerNestedInput
-    participatedExpenses?: ExpenseUpdateManyWithoutParticpipantsNestedInput
+    participatedExpenses?: ExpenseUpdateManyWithoutParticipantsNestedInput
     transfersIn?: TransferUpdateManyWithoutTargetNestedInput
   }
 
@@ -5921,7 +5994,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     bankAccount?: NullableStringFieldUpdateOperationsInput | string | null
     paidExpenses?: ExpenseUncheckedUpdateManyWithoutPayerNestedInput
-    participatedExpenses?: ExpenseUncheckedUpdateManyWithoutParticpipantsNestedInput
+    participatedExpenses?: ExpenseUncheckedUpdateManyWithoutParticipantsNestedInput
     transfersIn?: TransferUncheckedUpdateManyWithoutTargetNestedInput
   }
 
@@ -5941,7 +6014,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     bankAccount?: NullableStringFieldUpdateOperationsInput | string | null
     paidExpenses?: ExpenseUpdateManyWithoutPayerNestedInput
-    participatedExpenses?: ExpenseUpdateManyWithoutParticpipantsNestedInput
+    participatedExpenses?: ExpenseUpdateManyWithoutParticipantsNestedInput
     transfersOut?: TransferUpdateManyWithoutSourceNestedInput
   }
 
@@ -5951,7 +6024,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     bankAccount?: NullableStringFieldUpdateOperationsInput | string | null
     paidExpenses?: ExpenseUncheckedUpdateManyWithoutPayerNestedInput
-    participatedExpenses?: ExpenseUncheckedUpdateManyWithoutParticpipantsNestedInput
+    participatedExpenses?: ExpenseUncheckedUpdateManyWithoutParticipantsNestedInput
     transfersOut?: TransferUncheckedUpdateManyWithoutSourceNestedInput
   }
 
@@ -5959,7 +6032,7 @@ export namespace Prisma {
     name: string
     email: string
     bankAccount?: string | null
-    participatedExpenses?: ExpenseCreateNestedManyWithoutParticpipantsInput
+    participatedExpenses?: ExpenseCreateNestedManyWithoutParticipantsInput
     transfersOut?: TransferCreateNestedManyWithoutSourceInput
     transfersIn?: TransferCreateNestedManyWithoutTargetInput
   }
@@ -5969,7 +6042,7 @@ export namespace Prisma {
     name: string
     email: string
     bankAccount?: string | null
-    participatedExpenses?: ExpenseUncheckedCreateNestedManyWithoutParticpipantsInput
+    participatedExpenses?: ExpenseUncheckedCreateNestedManyWithoutParticipantsInput
     transfersOut?: TransferUncheckedCreateNestedManyWithoutSourceInput
     transfersIn?: TransferUncheckedCreateNestedManyWithoutTargetInput
   }
@@ -6018,7 +6091,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     bankAccount?: NullableStringFieldUpdateOperationsInput | string | null
-    participatedExpenses?: ExpenseUpdateManyWithoutParticpipantsNestedInput
+    participatedExpenses?: ExpenseUpdateManyWithoutParticipantsNestedInput
     transfersOut?: TransferUpdateManyWithoutSourceNestedInput
     transfersIn?: TransferUpdateManyWithoutTargetNestedInput
   }
@@ -6028,7 +6101,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     bankAccount?: NullableStringFieldUpdateOperationsInput | string | null
-    participatedExpenses?: ExpenseUncheckedUpdateManyWithoutParticpipantsNestedInput
+    participatedExpenses?: ExpenseUncheckedUpdateManyWithoutParticipantsNestedInput
     transfersOut?: TransferUncheckedUpdateManyWithoutSourceNestedInput
     transfersIn?: TransferUncheckedUpdateManyWithoutTargetNestedInput
   }
@@ -6068,11 +6141,15 @@ export namespace Prisma {
 
   export type TransferCreateManySourceInput = {
     id?: number
+    amount: number
+    date?: Date | string
     targetId: number
   }
 
   export type TransferCreateManyTargetInput = {
     id?: number
+    amount: number
+    date?: Date | string
     sourceId: number
   }
 
@@ -6080,7 +6157,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
-    particpipants?: UserUpdateManyWithoutParticipatedExpensesNestedInput
+    participants?: UserUpdateManyWithoutParticipatedExpensesNestedInput
   }
 
   export type ExpenseUncheckedUpdateWithoutPayerInput = {
@@ -6088,7 +6165,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
-    particpipants?: UserUncheckedUpdateManyWithoutParticipatedExpensesNestedInput
+    participants?: UserUncheckedUpdateManyWithoutParticipatedExpensesNestedInput
   }
 
   export type ExpenseUncheckedUpdateManyWithoutPayerInput = {
@@ -6098,14 +6175,14 @@ export namespace Prisma {
     amount?: FloatFieldUpdateOperationsInput | number
   }
 
-  export type ExpenseUpdateWithoutParticpipantsInput = {
+  export type ExpenseUpdateWithoutParticipantsInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     payer?: UserUpdateOneRequiredWithoutPaidExpensesNestedInput
   }
 
-  export type ExpenseUncheckedUpdateWithoutParticpipantsInput = {
+  export type ExpenseUncheckedUpdateWithoutParticipantsInput = {
     id?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
@@ -6113,7 +6190,7 @@ export namespace Prisma {
     payerId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type ExpenseUncheckedUpdateManyWithoutParticpipantsInput = {
+  export type ExpenseUncheckedUpdateManyWithoutParticipantsInput = {
     id?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
@@ -6122,30 +6199,42 @@ export namespace Prisma {
   }
 
   export type TransferUpdateWithoutSourceInput = {
+    amount?: FloatFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     target?: UserUpdateOneRequiredWithoutTransfersInNestedInput
   }
 
   export type TransferUncheckedUpdateWithoutSourceInput = {
     id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     targetId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TransferUncheckedUpdateManyWithoutSourceInput = {
     id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     targetId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TransferUpdateWithoutTargetInput = {
+    amount?: FloatFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: UserUpdateOneRequiredWithoutTransfersOutNestedInput
   }
 
   export type TransferUncheckedUpdateWithoutTargetInput = {
     id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     sourceId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TransferUncheckedUpdateManyWithoutTargetInput = {
     id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     sourceId?: IntFieldUpdateOperationsInput | number
   }
 
