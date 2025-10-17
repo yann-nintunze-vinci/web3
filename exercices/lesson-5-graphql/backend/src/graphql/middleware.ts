@@ -7,6 +7,7 @@ type User {
   id: ID!
   name: String!
   email: String
+  bankAccount: String
 }
 
 type Expense {
@@ -19,14 +20,15 @@ type Expense {
 }
 
 type Query {
-  expense(id: Int!): Expense
+  expense(id: ID!): Expense
 }
    `;
 
 const resolvers = {
-  Query: { 
-    expense: async (_parent : any, args : any, _context : any) => expenseRepository.getExpenseById(args.id)
-  }
+  Query: {
+    expense: async (_parent: any, args: any, _context: any) =>
+      expenseRepository.getExpenseById(Number(args.id)),
+  },
 };
 
 const server = new ApolloServer({ typeDefs, resolvers });

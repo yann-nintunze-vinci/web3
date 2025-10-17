@@ -17,6 +17,8 @@ const logger = pino({ name: "server start" });
 const app: Express = express();
 
 app.use(express.json());
+app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
+
 // Middlewares
 if (env.isDevelopment) {
   const config = { endpoint: "/graphql" };
@@ -35,7 +37,6 @@ app.set("trust proxy", true);
 
 app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
 app.use(rateLimiter);
 
 // Request logging

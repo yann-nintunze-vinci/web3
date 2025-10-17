@@ -4,6 +4,8 @@ import Layout, { layoutLoader } from "@/pages/Layout";
 import Transactions, { transactionsLoader } from "./pages/Transactions";
 import ExpenseDetail, { expenseDetailLoader } from "./pages/ExpenseDetail";
 import NewTransfer, { NewTransferLoader } from "./pages/NewTransfer";
+import { ApolloProvider } from "@apollo/client/react";
+import client from "./lib/graphql-client";
 
 const router = createBrowserRouter([
   {
@@ -32,8 +34,12 @@ const router = createBrowserRouter([
   },
 ]);
 
-function App() {
-  return <RouterProvider router={router} />;
-}
+const App = () => {
+  return (
+    <ApolloProvider client={client}>
+      <RouterProvider router={router} />
+    </ApolloProvider>
+  );
+};
 
 export default App;
