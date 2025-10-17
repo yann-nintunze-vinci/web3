@@ -1,6 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@as-integrations/express5";
 import * as expenseRepository from "@/api/expense/expenseRepository";
+import { RequestHandler } from "express";
 
 const typeDefs = `#graphql
 type User {
@@ -34,4 +35,5 @@ const resolvers = {
 const server = new ApolloServer({ typeDefs, resolvers });
 await server.start();
 
-export default expressMiddleware(server);
+const middleware: RequestHandler = expressMiddleware(server);
+export default middleware;

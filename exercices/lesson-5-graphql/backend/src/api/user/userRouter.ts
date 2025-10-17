@@ -3,7 +3,7 @@ import * as userController from "./userController";
 import { validateRequest } from "@/common/utils/httpHandlers";
 import { GetUserSchema } from "./userModel";
 
-const userRouter = Router();
+const userRouter: Router = Router();
 
 userRouter.get("/", userController.getUsers);
 userRouter.get(

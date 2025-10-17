@@ -9,7 +9,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "tsc && tsup",
+    "build": "tsup src/server.ts --format esm --target es2022",
     "start:dev": "node --import=tsx --watch src/index.ts",
     "start:prod": "node dist/index.js",
     "check": "biome check --write",

@@ -2,7 +2,7 @@ import { Router } from "express";
 import * as expenseController from "./expenseController";
 import { validateRequest } from "@/common/utils/httpHandlers";
 import { GetExpenseSchema } from "./expenseModel";
-const expenseRouter = Router();
+const expenseRouter: Router = Router();
 
 expenseRouter.get("/", expenseController.listExpenses);
 expenseRouter.post("/", expenseController.createExpense);

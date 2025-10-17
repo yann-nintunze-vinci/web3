@@ -1,7 +1,7 @@
 import { Router } from "express";
 import * as transactionController from "./transactionController";
 
-const transactionRouter = Router();
+const transactionRouter: Router = Router();
 
 transactionRouter.get("/", transactionController.getAllTransactions);
 
