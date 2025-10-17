@@ -1,61 +1,51 @@
-const { PrismaClient } = require("./generated/prisma");
+import { PrismaClient } from "./generated/prisma/index.js";
 
-const alice = await prisma.user.upsert({
-  where: { email: "alice@expenso.dev" },
-  update: {},
-  create: {
-    name: "Alice",
-    email: "alice@expenso.dev",
-  },
-});
+const prisma = new PrismaClient();
 
-const bob = await prisma.user.upsert({
-  where: { email: "bob@expenso.devm" },
-  update: {},
-  create: {
-    name: "Bob",
-    email: "bob@expenso.dev",
-  },
-});
+const main = async () => {
+  const alice = await prisma.user.upsert({
+    where: { email: "alice@expenso.dev" },
+    update: {},
+    create: {
+      name: "Alice",
+      email: "alice@expenso.dev",
+    },
+  });
 
-const defaultExpenses = [
-  {
-    date: new Date("2025-01-16T10:20:00.000Z"),
-    description: "Example expense #1 from Alice",
-    payerId: alice.id,
-    amount: 25.5,
-  },
-  {
-    date: new Date("2025-01-15T19:10:00.000Z"),
-    description: "Example expense #2 from Bob",
-    payerId: bob.id,
-    amount: 35,
-  },
-  {
-    date: new Date("2025-01-15T14:40:00.000Z"),
-    description: "Example expense #3 from Alice",
-    payerId: alice.id,
-    amount: 2,
-  },
-];
+  const bob = await prisma.user.upsert({
+    where: { email: "bob@expenso.dev" },
+    update: {},
+    create: {
+      name: "Bob",
+      email: "bob@expenso.dev",
+    },
+  });
 
-await prisma.expense.createMany({
-  data: defaultExpenses,
-});
-
-await prisma.transfert.createMany({
-  data: [
+  const defaultExpenses = [
     {
-      sourceId: alice.id,
-      targetId: bob.id,
+      date: new Date("2025-01-16T10:20:00.000Z"),
+      description: "Example expense #1 from Alice",
+      payerId: alice.id,
+      amount: 25.5,
     },
     {
-      sourceId: bob.id,
-      targetId: alice.id,
+      date: new Date("2025-01-15T19:10:00.000Z"),
+      description: "Example expense #2 from Bob",
+      payerId: bob.id,
+      amount: 35,
     },
-  ],
-});
+    {
+      date: new Date("2025-01-15T14:40:00.000Z"),
+      description: "Example expense #3 from Alice",
+      payerId: alice.id,
+      amount: 2,
+    },
+  ];
 
+  await prisma.expense.createMany({
+    data: defaultExpenses,
+  });
+};
 main()
   .finally(async () => {
     await prisma.$disconnect();

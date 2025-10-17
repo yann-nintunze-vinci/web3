@@ -1,28 +1,39 @@
-import "./App.css";
-import { useContext, useEffect } from "react";
-import NavBar from "./components/NavBar";
-import { Outlet } from "react-router-dom";
-import { ExpensesContext } from "./contexts/ExpensesContext";
-import type { ExpensesContextType } from "./type";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import HomePage from "@/pages/HomePage";
+import Layout, { layoutLoader } from "@/pages/Layout";
+import Transactions, { transactionsLoader } from "./pages/Transactions";
+import ExpenseDetail, { expenseDetailLoader } from "./pages/ExpenseDetail";
+import NewTransfer, { NewTransferLoader } from "./pages/NewTransfer";
 
-const App = () => {
-  const { getAllExpenses, getPayers, sort } =
-    useContext<ExpensesContextType>(ExpensesContext);
+const router = createBrowserRouter([
+  {
+    Component: Layout,
+    loader: layoutLoader,
+    id: "layout",
 
-  useEffect(() => {
-    getAllExpenses();
-  }, [sort]);
+    children: [
+      { index: true, Component: HomePage },
+      {
+        path: "transactions",
+        Component: Transactions,
+        loader: transactionsLoader,
+      },
+      {
+        path: "expenses/:id",
+        Component: ExpenseDetail,
+        loader: expenseDetailLoader,
+      },
+      {
+        path: "transfers/new",
+        Component: NewTransfer,
+        loader: NewTransferLoader,
+      },
+    ],
+  },
+]);
 
-  useEffect(() => {
-    getPayers();
-  }, []);
-
-  return (
-    <>
-      <NavBar />
-      <Outlet />
-    </>
-  );
-};
+function App() {
+  return <RouterProvider router={router} />;
+}
 
 export default App;

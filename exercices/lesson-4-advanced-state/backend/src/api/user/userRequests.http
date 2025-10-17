@@ -4,7 +4,7 @@
 GET http://{{hostname}}/api/users
 
 ### Get user by ID
-GET http://{{hostname}}/api/users/3
+GET http://{{hostname}}/api/users/1
 Content-Type: application/json
 
 ### Create new user
