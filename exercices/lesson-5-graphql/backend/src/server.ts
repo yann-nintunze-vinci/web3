@@ -11,24 +11,37 @@ import expenseRouter from "./api/expense/expenseRouter";
 import userRouter from "./api/user/userRouter";
 import transferRouter from "./api/transfer/transferRouter";
 import transactionRouter from "./api/transaction/transactionRouter";
-
+import graphqlMiddleware from "./graphql/middleware";
+import { ruruHTML } from "ruru/server";
 const logger = pino({ name: "server start" });
 const app: Express = express();
+
+app.use(express.json());
+// Middlewares
+if (env.isDevelopment) {
+  const config = { endpoint: "/graphql" };
+  app.get("/ruru", (_req, res) => {
+    res.format({
+      html: () => res.status(200).send(ruruHTML(config)),
+      default: () => res.status(406).send("Not Acceptable"),
+    });
+  });
+
+  app.use("/graphql", graphqlMiddleware);
+}
 
 // Set the application to trust the reverse proxy
 app.set("trust proxy", true);
 
-// Middlewares
-app.use(express.json());
+app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
-app.use(helmet());
 app.use(rateLimiter);
 
 // Request logging
 app.use(requestLogger);
 
-// Routes
+// REST Routes
 app.use("/health-check", healthCheckRouter);
 app.use("/api/expenses", expenseRouter);
 app.use("/api/users", userRouter);
