@@ -159,6 +159,14 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "windows"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -166,7 +174,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
+    "rootEnvPath": "../../.env",
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
@@ -176,6 +184,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -184,8 +193,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id                   Int        @id @default(autoincrement())\n  name                 String\n  email                String     @unique\n  bankAccount          String?\n  paidExpenses         Expense[]  @relation(\"PayerExpenses\")\n  participatedExpenses Expense[]  @relation(\"ParticipantExpenses\")\n  transfersOut         Transfer[] @relation(\"UserTransfersSource\")\n  transfersIn          Transfer[] @relation(\"UserTransfersTarget\")\n}\n\nmodel Transfer {\n  id       Int      @id @default(autoincrement())\n  amount   Float\n  date     DateTime @default(now())\n  sourceId Int\n  targetId Int\n  source   User     @relation(\"UserTransfersSource\", fields: [sourceId], references: [id])\n  target   User     @relation(\"UserTransfersTarget\", fields: [targetId], references: [id])\n}\n\nmodel Expense {\n  id           Int      @id @default(autoincrement())\n  date         DateTime @default(now())\n  description  String\n  amount       Float\n  payerId      Int\n  payer        User     @relation(\"PayerExpenses\", fields: [payerId], references: [id])\n  participants User[]   @relation(\"ParticipantExpenses\")\n}\n",
-  "inlineSchemaHash": "013d8f23d771517a2fa85db5d53b1701f9ef80e8ab7cb014d0135c7d693fe4fe",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../generated/prisma\"\n  binaryTargets = [\"native\", \"windows\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id                   Int        @id @default(autoincrement())\n  name                 String\n  email                String     @unique\n  bankAccount          String?\n  paidExpenses         Expense[]  @relation(\"PayerExpenses\")\n  participatedExpenses Expense[]  @relation(\"ParticipantExpenses\")\n  transfersOut         Transfer[] @relation(\"UserTransfersSource\")\n  transfersIn          Transfer[] @relation(\"UserTransfersTarget\")\n}\n\nmodel Transfer {\n  id       Int      @id @default(autoincrement())\n  amount   Float\n  date     DateTime @default(now())\n  sourceId Int\n  targetId Int\n  source   User     @relation(\"UserTransfersSource\", fields: [sourceId], references: [id])\n  target   User     @relation(\"UserTransfersTarget\", fields: [targetId], references: [id])\n}\n\nmodel Expense {\n  id           Int      @id @default(autoincrement())\n  date         DateTime @default(now())\n  description  String\n  amount       Float\n  payerId      Int\n  payer        User     @relation(\"PayerExpenses\", fields: [payerId], references: [id])\n  participants User[]   @relation(\"ParticipantExpenses\")\n}\n",
+  "inlineSchemaHash": "2b867e680c720bda79c1fdb2d80e5728b1698f392f0185c78a5a7912f4949c0c",
   "copyEngine": true
 }
 
@@ -226,6 +235,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "generated/prisma/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "generated/prisma/schema.prisma")
