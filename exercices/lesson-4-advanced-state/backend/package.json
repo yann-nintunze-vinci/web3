@@ -1,6 +1,5 @@
 {
   "name": "express-typescript-boilerplate",
-  "type": "module",
   "version": "1.0.14",
   "description": "An Express boilerplate backend",
   "author": "Edwin Hernandez",
