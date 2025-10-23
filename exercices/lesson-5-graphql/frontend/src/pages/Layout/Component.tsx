@@ -32,6 +32,9 @@ const Layout = () => {
           <NavLink to="/transfers/new" className="mr-4">
             New Transfer
           </NavLink>
+          <NavLink to="/expenses/new" className="mr-4">
+            New Expense
+          </NavLink>
 
           <select
             value={currentUser?.id ?? "none"}

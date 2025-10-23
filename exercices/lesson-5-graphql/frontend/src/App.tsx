@@ -6,6 +6,7 @@ import ExpenseDetail, { expenseDetailLoader } from "./pages/ExpenseDetail";
 import NewTransfer, { NewTransferLoader } from "./pages/NewTransfer";
 import { ApolloProvider } from "@apollo/client/react";
 import client from "./lib/graphql-client";
+import NewExpense, { newExpenseLoader } from "./pages/NewExpense";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
         path: "transfers/new",
         Component: NewTransfer,
         loader: NewTransferLoader,
+      },
+      {
+        path: "expenses/new",
+        Component: NewExpense,
+        loader: newExpenseLoader,
       },
     ],
   },

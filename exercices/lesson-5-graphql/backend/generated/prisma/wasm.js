@@ -173,7 +173,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
@@ -183,7 +183,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -192,8 +191,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../generated/prisma\"\n  binaryTargets = [\"native\", \"windows\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id                   Int        @id @default(autoincrement())\n  name                 String\n  email                String     @unique\n  bankAccount          String?\n  paidExpenses         Expense[]  @relation(\"PayerExpenses\")\n  participatedExpenses Expense[]  @relation(\"ParticipantExpenses\")\n  transfersOut         Transfer[] @relation(\"UserTransfersSource\")\n  transfersIn          Transfer[] @relation(\"UserTransfersTarget\")\n}\n\nmodel Transfer {\n  id       Int      @id @default(autoincrement())\n  amount   Float\n  date     DateTime @default(now())\n  sourceId Int\n  targetId Int\n  source   User     @relation(\"UserTransfersSource\", fields: [sourceId], references: [id])\n  target   User     @relation(\"UserTransfersTarget\", fields: [targetId], references: [id])\n}\n\nmodel Expense {\n  id           Int      @id @default(autoincrement())\n  date         DateTime @default(now())\n  description  String\n  amount       Float\n  payerId      Int\n  payer        User     @relation(\"PayerExpenses\", fields: [payerId], references: [id])\n  participants User[]   @relation(\"ParticipantExpenses\")\n}\n",
-  "inlineSchemaHash": "2b867e680c720bda79c1fdb2d80e5728b1698f392f0185c78a5a7912f4949c0c",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../generated/prisma\"\n  binaryTargets = [\"native\", \"windows\", \"debian-openssl-3.0.x\"]\n}\n\ngenerator pothos {\n  provider = \"prisma-pothos-types\"\n  output   = \"../generated/pothos-prisma-types.ts\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id                   Int        @id @default(autoincrement())\n  name                 String\n  email                String     @unique\n  bankAccount          String?\n  paidExpenses         Expense[]  @relation(\"PayerExpenses\")\n  participatedExpenses Expense[]  @relation(\"ParticipantExpenses\")\n  transfersOut         Transfer[] @relation(\"UserTransfersSource\")\n  transfersIn          Transfer[] @relation(\"UserTransfersTarget\")\n}\n\nmodel Transfer {\n  id       Int      @id @default(autoincrement())\n  amount   Float\n  date     DateTime @default(now())\n  sourceId Int\n  targetId Int\n  source   User     @relation(\"UserTransfersSource\", fields: [sourceId], references: [id])\n  target   User     @relation(\"UserTransfersTarget\", fields: [targetId], references: [id])\n}\n\nmodel Expense {\n  id           Int      @id @default(autoincrement())\n  date         DateTime @default(now())\n  description  String\n  amount       Float\n  payerId      Int\n  payer        User     @relation(\"PayerExpenses\", fields: [payerId], references: [id])\n  participants User[]   @relation(\"ParticipantExpenses\")\n}\n",
+  "inlineSchemaHash": "2dfb11ce6eaea5a4234e1dcbb3ce536c18fb7587ff039fa9562e94783f6f8763",
   "copyEngine": true
 }
 config.dirname = '/'

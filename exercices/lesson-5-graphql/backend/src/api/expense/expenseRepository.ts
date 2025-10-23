@@ -25,7 +25,6 @@ const getExpenseById = async (id: number) => {
 const createExpense = async ({
   description,
   amount,
-  date,
   payerId,
   participantIds = [],
 }: Expense) => {
@@ -33,7 +32,6 @@ const createExpense = async ({
     data: {
       description,
       amount,
-      date,
       payerId,
       participants: { connect: participantIds.map((id) => ({ id })) },
     },

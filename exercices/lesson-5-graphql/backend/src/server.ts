@@ -11,7 +11,7 @@ import expenseRouter from "./api/expense/expenseRouter";
 import userRouter from "./api/user/userRouter";
 import transferRouter from "./api/transfer/transferRouter";
 import transactionRouter from "./api/transaction/transactionRouter";
-import graphqlMiddleware from "./graphql/middleware";
+import graphqlMiddleware from "./graphql/server";
 import { ruruHTML } from "ruru/server";
 const logger = pino({ name: "server start" });
 const app: Express = express();

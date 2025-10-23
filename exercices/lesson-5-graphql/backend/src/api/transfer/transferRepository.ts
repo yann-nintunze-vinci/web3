@@ -22,18 +22,12 @@ const getTransferById = async (id: number) => {
   });
 };
 
-const createTransfer = async ({
-  sourceId,
-  targetId,
-  amount,
-  date,
-}: Transfer) => {
+const createTransfer = async ({ sourceId, targetId, amount }: Transfer) => {
   return prisma.transfer.create({
     data: {
       sourceId,
       targetId,
       amount,
-      date,
     },
     include: {
       source: true,

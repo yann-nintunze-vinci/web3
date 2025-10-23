@@ -4,6 +4,11 @@ generator client {
   binaryTargets = ["native", "windows", "debian-openssl-3.0.x"]
 }
 
+generator pothos {
+  provider = "prisma-pothos-types"
+  output   = "../generated/pothos-prisma-types.ts"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
