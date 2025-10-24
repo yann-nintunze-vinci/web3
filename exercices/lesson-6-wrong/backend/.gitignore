@@ -8,12 +8,12 @@ pnpm-debug.log*
 lerna-debug.log*
 
 coverage
-generated
 node_modules
 dist
 build
 dist-ssr
 *.local
+.env
 
 # Editor directories and files
 !.vscode/extensions.json
@@ -24,3 +24,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+src/generated/
