@@ -4,7 +4,7 @@ import { gql } from "@apollo/client";
 import type { LoaderFunctionArgs } from "react-router-dom";
 
 const EXPENSE_QUERY = gql`
-  query ExpenseDetail($id: ID!) {
+  query ExpenseDetail($id: Int!) {
     expense(id: $id) {
       id
       description
@@ -29,7 +29,7 @@ export interface LoaderData {
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const { data, error } = await graphqlClient.query<LoaderData>({
     query: EXPENSE_QUERY,
-    variables: { id: params.id },
+    variables: { id: parseInt(params.id || '') },
   });
 
   if (!data?.expense || error) {
