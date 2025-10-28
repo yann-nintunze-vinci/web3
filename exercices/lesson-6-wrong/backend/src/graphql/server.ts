@@ -3,8 +3,9 @@ import { expressMiddleware } from "@as-integrations/express5";
 import schema from "./schema";
 import { GraphQLContext } from "@/types/GraphQLContext";
 import { verifyToken } from "@/api/auth/authService";
+import { formatError } from "./errorFormatter";
 
-const server = new ApolloServer({ schema: schema });
+const server = new ApolloServer({ schema, formatError });
 await server.start();
 
 const graphqlMiddleware = expressMiddleware(server, {

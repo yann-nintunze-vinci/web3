@@ -1,7 +1,7 @@
-import type { Expense } from '@/types/Expense';
-import type { LoaderFunctionArgs } from 'react-router';
-import { gql } from '@apollo/client';
-import graphqlClient from '@/lib/graphql-client';
+import type { Expense } from "@/types/Expense";
+import type { LoaderFunctionArgs } from "react-router";
+import { gql } from "@apollo/client";
+import graphqlClient from "@/lib/graphql-client";
 
 const EXPENSE_QUERY = gql`
   query ExpenseDetail($id: Int!) {
@@ -32,7 +32,9 @@ export async function loader({ params }: LoaderFunctionArgs) {
   });
 
   if (!data?.expense || error) {
-    throw new Error('Error while retrieving expense details from the server: ' + error);
+    throw new Error(
+      "Error while retrieving expense details from the server: " + error
+    );
   }
 
   return { expense: data.expense };

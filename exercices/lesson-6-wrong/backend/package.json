@@ -8,7 +8,9 @@
     "start:prod": "node dist/index.js",
     "check": "biome check --write",
     "test": "vitest run",
-    "test:cov": "vitest run --coverage"
+    "test:cov": "vitest run --coverage",
+    "read": "node --import=tsx db-read.js",
+    "populate": "node --import=tsx db-populate.js"
   },
   "dependencies": {
     "@apollo/server": "^5.0.0",

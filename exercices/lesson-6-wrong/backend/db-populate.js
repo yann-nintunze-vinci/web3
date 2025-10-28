@@ -1,13 +1,21 @@
 import { PrismaClient } from "@/generated/prisma/client";
-import "dotenv/config";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const prisma = new PrismaClient();
+
+const SALT_ROUNDS = 10;
 
 async function main() {
   // Clear existing data
   await prisma.transfer.deleteMany();
   await prisma.expense.deleteMany();
   await prisma.user.deleteMany();
+  await prisma.$executeRaw`ALTER SEQUENCE "User_id_seq" RESTART WITH 1`;
+  await prisma.$executeRaw`ALTER SEQUENCE "Expense_id_seq" RESTART WITH 1`;
+  await prisma.$executeRaw`ALTER SEQUENCE "Transfer_id_seq" RESTART WITH 1`;
 
   console.log("Cleared existing data.");
 
@@ -15,21 +23,21 @@ async function main() {
   const users = await prisma.user.createMany({
     data: [
       {
-        id: 1,
         name: "Alice",
         email: "alice@expenso.dev",
         bankAccount: "1234567890",
+        password: await bcrypt.hash("alice", SALT_ROUNDS),
       },
       {
-        id: 2,
         name: "Bob",
         email: "bob@expenso.dev",
         bankAccount: "0987654321",
+        password: await bcrypt.hash("bob", SALT_ROUNDS),
       },
       {
-        id: 3,
         name: "Charlie",
         email: "charlie@expenso.dev",
+        password: await bcrypt.hash("charlie", SALT_ROUNDS),
       },
     ],
     skipDuplicates: true,
@@ -39,7 +47,6 @@ async function main() {
   // Create expenses with participants
   const expense1 = await prisma.expense.create({
     data: {
-      id: 1,
       description: "Coffee",
       amount: 3.5,
       payerId: 1, // Alice pays
@@ -51,7 +58,6 @@ async function main() {
 
   const expense2 = await prisma.expense.create({
     data: {
-      id: 2,
       description: "Groceries",
       amount: 45.0,
       payerId: 2, // Bob pays
@@ -63,7 +69,6 @@ async function main() {
 
   const expense3 = await prisma.expense.create({
     data: {
-      id: 3,
       description: "Internet Bill",
       amount: 60.0,
       payerId: 3, // Charlie pays
@@ -79,19 +84,16 @@ async function main() {
   const transfers = await prisma.transfer.createMany({
     data: [
       {
-        id: 1,
         amount: 1.75, // Bob owes Alice half of coffee
         sourceId: 2, // From Bob
         targetId: 1, // To Alice
       },
       {
-        id: 2,
         amount: 15.0, // Alice owes Bob her share of groceries
         sourceId: 1, // From Alice
         targetId: 2, // To Bob
       },
       {
-        id: 3,
         amount: 30.0, // Bob owes Charlie half of internet bill
         sourceId: 2, // From Bob
         targetId: 3, // To Charlie

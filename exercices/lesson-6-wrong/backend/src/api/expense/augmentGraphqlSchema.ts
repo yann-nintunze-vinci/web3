@@ -2,7 +2,8 @@ import { Expense } from "@/generated/prisma/client";
 import SchemaBuilder from "@/graphql/builder";
 import * as expenseRepository from "./expenseRepository";
 import { GraphQLError } from "graphql";
-import { requireAuth } from "@/graphql/authHelpers";
+import { requireAuth, requireAccess } from "@/graphql/authHelpers";
+import { NotFoundError } from "@/errors/AppErrors";
 
 const augmentSchema = (builder: typeof SchemaBuilder) => {
   const ExpenseRef = builder.prismaObject("Expense", {
@@ -34,9 +35,7 @@ const augmentSchema = (builder: typeof SchemaBuilder) => {
           );
 
           if (!expense) {
-            throw new GraphQLError("Expense not found", {
-              extensions: { code: "NOT_FOUND" },
-            });
+            throw new NotFoundError("Expense not found");
           }
 
           // Check if user is involved in this expense (as payer or participant)
@@ -44,14 +43,10 @@ const augmentSchema = (builder: typeof SchemaBuilder) => {
             expense.payer.id === user.userId ||
             expense.participants.some((p) => p.id === user.userId);
 
-          if (!isInvolved) {
-            throw new GraphQLError(
-              "You don't have permission to view this expense",
-              {
-                extensions: { code: "FORBIDDEN" },
-              }
-            );
-          }
+          requireAccess(
+            isInvolved,
+            "You don't have permission to access this expense"
+          );
 
           return expense;
         },
@@ -75,14 +70,10 @@ const augmentSchema = (builder: typeof SchemaBuilder) => {
           const user = requireAuth(ctx);
 
           // User can only create expenses where they are the payer
-          if (user.userId !== args.payerId) {
-            throw new GraphQLError(
-              "You can only create expenses that you paid for",
-              {
-                extensions: { code: "FORBIDDEN" },
-              }
-            );
-          }
+          requireAccess(
+            user.userId == args.payerId,
+            "You can only create expenses that you paid for"
+          );
 
           const { description, amount, date, payerId, participantIds } = args;
           return expenseRepository.createExpense({

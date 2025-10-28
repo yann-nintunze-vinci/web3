@@ -24,7 +24,7 @@ app.set("trust proxy", true);
 if (env.isDevelopment) {
   const config = { endpoint: "/graphql" };
   // Serve Ruru HTML
-  app.get("/ruru", (req, res) => {
+  app.get("/ruru", (_req, res) => {
     res.format({
       html: () => res.status(200).send(ruruHTML(config)),
       default: () => res.status(406).send("Not Acceptable"),
@@ -35,7 +35,6 @@ if (env.isDevelopment) {
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -63,7 +62,7 @@ app.use(
 // Configure CORS for authenticated requests
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: env.FRONTEND_URL,
     credentials: true,
   })
 );

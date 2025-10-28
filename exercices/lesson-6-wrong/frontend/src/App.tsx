@@ -1,50 +1,76 @@
-import { createBrowserRouter, RouterProvider } from 'react-router';
-import Layout, { loader as layoutLoader } from './pages/Layout';
-import Welcome from './pages/Welcome';
-import Transactions, { loader as transactionsLoader } from './pages/Transactions';
-import ExpenseDetail, { loader as expenseDetailLoader } from './pages/ExpenseDetails';
-import NewTransfer, { loader as NewTransferLoader } from './pages/NewTransfer';
-import NewExpense, { loader as NewExpenseLoader } from './pages/NewExpense';
-import { ApolloProvider } from '@apollo/client/react';
-import client from './lib/graphql-client';
+import { createBrowserRouter, RouterProvider } from "react-router";
+import Layout from "./pages/Layout";
+import Welcome from "./pages/Welcome";
+import Transactions, {
+  loader as transactionsLoader,
+} from "./pages/Transactions";
+import ExpenseDetail, {
+  loader as expenseDetailLoader,
+} from "./pages/ExpenseDetails";
+import NewTransfer, { loader as NewTransferLoader } from "./pages/NewTransfer";
+import NewExpense, { loader as NewExpenseLoader } from "./pages/NewExpense";
+import { ApolloProvider } from "@apollo/client/react";
+import client from "./lib/graphql-client";
+import { AuthProvider } from "./contexts/AuthContext";
+import Login from "./pages/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const router = createBrowserRouter([
   {
-    Component: Layout,
-    loader: layoutLoader,
-    id: 'layout',
-
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/",
+    element: <Layout />,
     children: [
-      { index: true, Component: Welcome },
       {
-        path: 'transactions',
-        Component: Transactions,
-        loader: transactionsLoader,
+        index: true,
+        element: <Welcome />,
       },
       {
-        path: 'expenses/:id',
-        Component: ExpenseDetail,
+        path: "expenses/new",
+        element: (
+          <ProtectedRoute>
+            <NewExpense />
+          </ProtectedRoute>
+        ),
+        loader: NewExpenseLoader,
+      },
+      {
+        path: "expenses/:id",
+        element: <ExpenseDetail />,
         loader: expenseDetailLoader,
       },
       {
-        path: 'transfers/new',
-        Component: NewTransfer,
+        path: "transfers/new",
+        element: (
+          <ProtectedRoute>
+            <NewTransfer />
+          </ProtectedRoute>
+        ),
         loader: NewTransferLoader,
       },
       {
-        path: 'expenses/new',
-        Component: NewExpense,
-        loader: NewExpenseLoader,
+        path: "transactions",
+        element: <Transactions />,
+        loader: transactionsLoader,
       },
+      {},
     ],
   },
 ]);
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <RouterProvider router={router} />
-    </ApolloProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <ApolloProvider client={client}>
+          <RouterProvider router={router} />
+        </ApolloProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 

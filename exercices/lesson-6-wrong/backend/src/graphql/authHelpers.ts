@@ -1,5 +1,5 @@
-import { GraphQLError } from "graphql";
 import type { GraphQLContext } from "@/types/GraphQLContext";
+import { AuthenticationError, AuthorizationError } from "@/errors/AppErrors";
 
 const requireAuth = (
   context: GraphQLContext
@@ -8,26 +8,17 @@ const requireAuth = (
   email: string;
 } => {
   if (!context.user) {
-    throw new GraphQLError("You must be logged in to perform this action", {
-      extensions: { code: "UNAUTHENTICATED" },
-    });
+    throw new AuthenticationError(
+      "You must be logged in to perform this action"
+    );
   }
   return context.user;
 };
 
-const requireOwnership = (
-  userId: number,
-  resourceOwnerId: number,
-  resourceName: string = "resource"
-): void => {
-  if (userId !== resourceOwnerId) {
-    throw new GraphQLError(
-      `You don't have permission to access this ${resourceName}`,
-      {
-        extensions: { code: "FORBIDDEN" },
-      }
-    );
+const requireAccess = (condition: boolean, message: string): void => {
+  if (!condition) {
+    throw new AuthorizationError(message);
   }
 };
 
-export { requireAuth, requireOwnership };
+export { requireAuth, requireAccess };
