@@ -5,17 +5,22 @@ import {
   ConflictError,
 } from "@/errors/AppErrors";
 import { PrismaClient } from "@/generated/prisma/client";
-import type {
-  AuthResponse,
-  LoginInput,
-  RegisterInput,
-} from "@/types/AuthTypes";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import type { RegisterInput, LoginInput } from "@/validation/authSchemas";
 
 const prisma = new PrismaClient();
 const JWT_SECRET = env.JWT_SECRET;
 const SALT_ROUNDS = 10;
+
+interface AuthResponse {
+  token: string;
+  user: {
+    id: number;
+    name: string;
+    email: string;
+  };
+}
 
 const register = async (input: RegisterInput): Promise<AuthResponse> => {
   // Check if user already exists
