@@ -22,7 +22,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "C:\\Users\\Martin\\code\\vinci\\web3\\examens\\expenso-render\\backend\\src\\generated\\prisma",
+      "value": "C:\\Users\\yannn\\web3\\exercices\\lesson-7-async\\backend\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -36,7 +36,7 @@ const config: runtime.GetPrismaClientConfig = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Martin\\code\\vinci\\web3\\examens\\expenso-render\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\yannn\\web3\\exercices\\lesson-7-async\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../../../prisma",

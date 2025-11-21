@@ -1,8 +1,8 @@
- @hostname = localhost:3000
+ @baseUrl = http://localhost:3000
 
 
 ### Register a new user
-POST http://{{hostname}}/auth/register
+POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### Successful authentication
-POST http://{{hostname}}/auth/login
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
@@ -21,7 +21,7 @@ Content-Type: application/json
 }
 
 ### Failed authentication
-POST http://{{hostname}}/auth/login
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {

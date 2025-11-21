@@ -22,6 +22,7 @@ import {
   AuthenticatedSocket,
   authenticateSocket,
 } from "./socket/authMiddleware";
+import { queuePdfGeneration } from "./queues/pdfQueue";
 
 const logger = pino({ name: "server start" });
 const app: Express = express();
@@ -92,6 +93,15 @@ if (process.env.NODE_ENV === "development") {
 
 // Error handlers
 app.use(errorHandler());
+
+// Test endpoint (add to server.ts temporarily)
+app.post('/test/pdf', async (_, res) => {
+  const job = await queuePdfGeneration({
+    userId: 1,
+    reportId: `test-${Date.now()}`,
+  });
+  res.json({ message: 'Job queued', jobId: job.id });
+});
 
 const io = new SocketServer(httpServer, {
   cors: {
